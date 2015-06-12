@@ -17,23 +17,26 @@ function createPipeline (steps, cursor) {
     runPipeline.after         = after;
     runPipeline.remove        = remove;
     runPipeline.appendStepsTo = appendStepsTo;
+
     return runPipeline;
 
     function runPipeline () {
-        return steps.reduce(function (pipeline, step) {
+        var result = through.obj();
+        steps.reduce(function (pipeline, step) {
             return step.task ? pipeline.pipe(step.task.apply(null, step.args)) : pipeline;
-        }, through.obj());
+        }, result);
+        return result;
     }
 
     function pipe (/*[label], [task], [args...]*/) {
-        var args       = slice.call(arguments, 0);
-        var label      = (args[0] instanceof String)   && args.shift();
+        var args       = slice.call(arguments);
+        var label      = ('string' === typeof args[0]) && args.shift();
         var task       = (args[0] instanceof Function) && args.shift();
         var spliceArgs = [ cursor, 0 ]
 
         // if we're adding a labeledpipe or a lazypipe, add begining and end markers.
         if (task.appendStepsTo instanceof Function) {
-            spliceArgs.push({ label: label, begin: true });
+            spliceArgs.push({ label: label, start: true });
             spliceArgs = task.appendStepsTo(spliceArgs);
             spliceArgs.push({ label: label, end: true });
         }
@@ -48,25 +51,28 @@ function createPipeline (steps, cursor) {
         }
 
         var stepsCopy = steps.slice();
-        return createPipeline(stepsCopy.splice.apply(stepsCopy, spliceArgs), cursor + spliceArgs.length - 2);
+        stepsCopy.splice.apply(stepsCopy, spliceArgs);
+        return createPipeline(stepsCopy, cursor + spliceArgs.length - 2);
     }
 
     function before (label) {
         var location = findLabel(label, 'Unable to move cursor before step ');
-        createPipeline(steps.slice(), location.start);
+        return createPipeline(steps.slice(), location.start);
     }
 
     function after (label) {
         var location = findLabel(label, 'Unable to move cursor after step ');
-        createPipeline(steps.slice(), location.end + 1);
+        return createPipeline(steps.slice(), location.end + 1);
     }
 
     function remove (label) {
-        var location  = findLabel(label, 'Unable to move cursor after step ');
+        var location  = findLabel(label, 'Unable to remove step ');
         var newCursor = (cursor < location.start) ? cursor :
             (cursor <= location.end) ? location.start : (cursor - location.length);
 
-        createPipeline(steps.slice().splice(location.start, location.length), newCursor);
+        var stepsCopy = steps.slice();
+        stepsCopy.splice(location.start, location.length);
+        return createPipeline(stepsCopy, newCursor);
     }
 
     function findLabel (label, errorPrefix) {
