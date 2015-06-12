@@ -1,0 +1,9 @@
+coverage/
+examples/
+tests/
+docs/
+.gitignore
+.jscsrc
+.jshintignore
+.jshintrc
+create-coverage-badge.js

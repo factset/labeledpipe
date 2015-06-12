@@ -1,0 +1,20 @@
+{
+  "name": "labeled-lazypipe",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "<redacted>"
+  },
+  "keywords": [
+    "node"
+  ],
+  "author": "Adam Herrmann <aherrmann@factset.com>",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {
+    "through2": "^2.0.0"
+  }
+}
