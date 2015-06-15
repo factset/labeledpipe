@@ -17,18 +17,28 @@ function reportStage (label) {
     }
 }
 
+function emitError (label) {
+    return through.obj(transform);
+
+    function transform (file, enc, done) {
+        this.emit('error', new Error('Error from ' + label));
+    }
+}
+
+
 var stream = through.obj();
 
-// stream
-//     .pipe(reportStage('A'))
-//     .pipe(reportStage('B'))
-//     .pipe(reportStage('C'))
-// ;
+stream
+    .pipe(reportStage('A'))
+    .pipe(reportStage('B'))
+    .pipe(reportStage('C'))
+;
 
 var first = labeledpipe()
     .pipe('A', reportStage, 'A')
     .pipe('B', reportStage, 'B')
     .pipe('C', reportStage, 'C')
+    .pipe('X', emitError,   'X')
 ;
 
 var second = labeledpipe()
@@ -46,7 +56,12 @@ var third = labeledpipe()
 ;
 
 
-stream.pipe(third());
+var pipeline = stream.pipe(third());
+
+pipeline.on('error', function () {
+    console.log('Caught error');
+});
+
 
 stream.write({});
 stream.end();

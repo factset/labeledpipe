@@ -13,8 +13,10 @@
   ],
   "author": "Adam Herrmann <aherrmann@factset.com>",
   "license": "MIT",
-  "devDependencies": {},
-  "dependencies": {
+  "devDependencies": {
     "through2": "^2.0.0"
+    },
+  "dependencies": {
+    "stream-combiner": "^0.2.2"
   }
 }

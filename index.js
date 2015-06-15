@@ -1,10 +1,9 @@
 'use strict';
 
-var through = require('through2');
+var combine = require('stream-combiner');
 var slice   = Array.prototype.slice;
 
 module.exports = labeledpipe;
-
 
 // create labeledPipe
 function labeledpipe () {
@@ -21,11 +20,12 @@ function createPipeline (steps, cursor) {
     return runPipeline;
 
     function runPipeline () {
-        var result = through.obj();
-        steps.reduce(function (pipeline, step) {
-            return step.task ? pipeline.pipe(step.task.apply(null, step.args)) : pipeline;
-        }, result);
-        return result;
+        var streams = steps
+            .filter(function (step) { return step.task; })
+            .map(function (step) { return step.task.apply(null, step.args); })
+        ;
+
+        return combine(streams);
     }
 
     function pipe (/*[label], [task], [args...]*/) {
@@ -96,5 +96,3 @@ function createPipeline (steps, cursor) {
         return otherSteps.concat(steps);
     }
 }
-
-function noop () {};
