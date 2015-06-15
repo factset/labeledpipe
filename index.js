@@ -15,6 +15,8 @@ function createPipeline (steps, cursor) {
     runPipeline.before        = before;
     runPipeline.after         = after;
     runPipeline.remove        = remove;
+    runPipeline.first         = first;
+    runPipeline.last          = last;
     runPipeline.appendStepsTo = appendStepsTo;
 
     return runPipeline;
@@ -94,6 +96,14 @@ function createPipeline (steps, cursor) {
         }
 
         throw Error(errorPrefix + label);
+    }
+
+    function first () {
+        return createPipeline(steps.slice(0), 0);
+    }
+
+    function last {
+        return createPipeline(steps.slice(0), steps.length);
     }
 
     function appendStepsTo (otherSteps, keepLabels) {
