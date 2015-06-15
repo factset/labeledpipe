@@ -38,7 +38,7 @@ function createPipeline (steps, cursor) {
         var args       = slice.call(arguments);
         var label      = ('string' === typeof args[0]) && args.shift();
         var task       = (args[0] instanceof Function) && args.shift();
-        var spliceArgs = [ cursor, 0 ]
+        var spliceArgs = [ cursor, 0 ];
 
         // if we're adding a labeledpipe or a lazypipe, add begining and end markers.
         if (task.appendStepsTo instanceof Function) {
@@ -82,14 +82,14 @@ function createPipeline (steps, cursor) {
     }
 
     function findLabel (label, errorPrefix) {
-        for (var start = 0; start < steps.length; start++) {
+        for (var start = 0; start < steps.length; start += 1) {
             if (label === steps[start].label && steps[start].start) {
                 break;
             }
         }
 
         var length = 1;
-        for (var end = start; end < steps.length; end++, length++) {
+        for (var end = start; end < steps.length; end += 1, length += 1) {
             if (label === steps[end].label && steps[end].end) {
                 return { start: start, end: end, length: length };
             }
@@ -102,7 +102,7 @@ function createPipeline (steps, cursor) {
         return createPipeline(steps.slice(0), 0);
     }
 
-    function last {
+    function last () {
         return createPipeline(steps.slice(0), steps.length);
     }
 

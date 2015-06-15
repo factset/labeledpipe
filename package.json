@@ -1,22 +1,54 @@
 {
-  "name": "labeled-lazypipe",
-  "version": "0.0.0",
-  "description": "",
+  "author": {
+    "name": "Adam Herrmann",
+    "email": "aherrmann@factset.com",
+    "url": "<redacted>"
+  },
+  "bugs": "<redacted>",
+  "description": "Lazypipe with labels",
+  "engines": {
+    "node": "^0.12.0",
+    "npm": "^2.5.1"
+  },
+  "files": [
+    "index.js"
+  ],
+  "homepage": "<redacted>",
+  "keywords": [],
   "main": "index.js",
-  "scripts": {},
+  "name": "@fds/labeled-lazypipe",
+  "publishConfig": {
+    "registry": "<redacted>"
+  },
   "repository": {
     "type": "git",
     "url": "<redacted>"
   },
-  "keywords": [
-    "node"
-  ],
-  "author": "Adam Herrmann <aherrmann@factset.com>",
-  "license": "MIT",
-  "devDependencies": {
-    "through2": "^2.0.0"
-    },
+  "scripts": {
+    "lint": "jshint index.js test",
+    "checkStyle": "jscs index.js test",
+    "test": "mocha test",
+    "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha test",
+    "cobertura": "npm run coverage && istanbul report cobertura && node create-coverage-badge.js",
+    "docs": "jsdoc --configure .jsdoc",
+    "build": "npm run lint && npm run checkStyle"
+  },
+  "version": "0.0.0",
   "dependencies": {
     "stream-combiner": "^0.2.2"
+  },
+  "devDependencies": {
+    "chai": "^2.2.0",
+    "ink-docstrap": "^0.5.2",
+    "istanbul": "^0.3.13",
+    "istanbul-cobertura-badger": "0.0.4",
+    "jscs": "^1.12.0",
+    "jsdoc": "^3.3.0-beta3",
+    "jshint": "^2.7.0",
+    "lazypipe": "^0.2.3",
+    "mocha": "^2.2.4",
+    "sinon": "^1.14.1",
+    "sinon-chai": "^2.7.0",
+    "through2": "^2.0.0"
   }
 }
