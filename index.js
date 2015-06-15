@@ -21,11 +21,15 @@ function createPipeline (steps, cursor) {
 
     function runPipeline () {
         var streams = steps
-            .filter(function (step) { return step.task; })
+            .filter(hasTask)
             .map(function (step) { return step.task.apply(null, step.args); })
         ;
 
         return combine(streams);
+    }
+
+    function hasTask (step) {
+        return !!step.task;
     }
 
     function pipe (/*[label], [task], [args...]*/) {
@@ -37,7 +41,7 @@ function createPipeline (steps, cursor) {
         // if we're adding a labeledpipe or a lazypipe, add begining and end markers.
         if (task.appendStepsTo instanceof Function) {
             spliceArgs.push({ label: label, start: true });
-            spliceArgs = task.appendStepsTo(spliceArgs);
+            spliceArgs = task.appendStepsTo(spliceArgs, true);
             spliceArgs.push({ label: label, end: true });
         }
         else {
@@ -92,7 +96,7 @@ function createPipeline (steps, cursor) {
         throw Error(errorPrefix + label);
     }
 
-    function appendStepsTo (otherSteps) {
-        return otherSteps.concat(steps);
+    function appendStepsTo (otherSteps, keepLabels) {
+        return otherSteps.concat(keepLabels ? steps : steps.filter(hasTask));
     }
 }
