@@ -7,38 +7,28 @@ module.exports = labeledpipe;
 
 // create labeledPipe
 function labeledpipe () {
-    return createPipeline([], 0);
+    return new LabeledPipe([], 0);
 }
 
-function createPipeline (steps, cursor) {
-    runPipeline.pipe          = pipe;
-    runPipeline.before        = before;
-    runPipeline.after         = after;
-    runPipeline.remove        = remove;
-    runPipeline.first         = first;
-    runPipeline.last          = last;
-    runPipeline.appendStepsTo = appendStepsTo;
+function LabeledPipe (steps, cursor) {
+    this._steps  = steps;
+    this._cursor = cursor;
 
-    return runPipeline;
+    return Object
+        .keys(LabeledPipe.prototype)
+        .reduce(function (result, method) {
+            result[method] = this[method].bind(this);
+            return result;
+        }.bind(this), this.build.bind(this))
+    ;
+}
 
-    function runPipeline () {
-        var streams = steps
-            .filter(hasTask)
-            .map(function (step) { return step.task.apply(null, step.args); })
-        ;
-
-        return combine(streams);
-    }
-
-    function hasTask (step) {
-        return !!step.task;
-    }
-
-    function pipe (/*[label], [task], [args...]*/) {
+LabeledPipe.prototype = {
+    pipe: function (/*[label], [task], [args...]*/) {
         var args       = slice.call(arguments);
         var label      = ('string' === typeof args[0]) && args.shift();
         var task       = (args[0] instanceof Function) && args.shift();
-        var spliceArgs = [ cursor, 0 ];
+        var spliceArgs = [ this._cursor, 0 ];
 
         // if we're adding a labeledpipe or a lazypipe, add begining and end markers.
         if (task.appendStepsTo instanceof Function) {
@@ -56,57 +46,75 @@ function createPipeline (steps, cursor) {
             });
         }
 
-        var stepsCopy = steps.slice();
+        var stepsCopy = this.steps();
         stepsCopy.splice.apply(stepsCopy, spliceArgs);
-        return createPipeline(stepsCopy, cursor + spliceArgs.length - 2);
-    }
+        return new LabeledPipe(stepsCopy, this._cursor + spliceArgs.length - 2);
+    },
 
-    function before (label) {
-        var location = findLabel(label, 'Unable to move cursor before step ');
-        return createPipeline(steps.slice(), location.start);
-    }
+    before: function (label) {
+        var location = this.findLabel(label, 'Unable to move cursor before step ');
+        return new LabeledPipe(this.steps(), location.start);
+    },
 
-    function after (label) {
-        var location = findLabel(label, 'Unable to move cursor after step ');
-        return createPipeline(steps.slice(), location.end + 1);
-    }
+    after: function (label) {
+        var location = this.findLabel(label, 'Unable to move cursor after step ');
+        return new LabeledPipe(this.steps(), location.end + 1);
+    },
 
-    function remove (label) {
-        var location  = findLabel(label, 'Unable to remove step ');
-        var newCursor = (cursor < location.start) ? cursor :
-            (cursor <= location.end) ? location.start : (cursor - location.length);
+    remove: function (label) {
+        var location  = this.findLabel(label, 'Unable to remove step ');
+        var newCursor = (this._cursor < location.start) ? this._cursor :
+            (this._cursor <= location.end) ? location.start : (this._cursor - location.length);
 
-        var stepsCopy = steps.slice();
+        var stepsCopy = this.steps();
         stepsCopy.splice(location.start, location.length);
-        return createPipeline(stepsCopy, newCursor);
-    }
+        return new LabeledPipe(stepsCopy, newCursor);
+    },
 
-    function findLabel (label, errorPrefix) {
-        for (var start = 0; start < steps.length; start += 1) {
-            if (label === steps[start].label && steps[start].start) {
+    first: function () {
+        return new LabeledPipe(this.steps(), 0);
+    },
+
+    last: function () {
+        return new LabeledPipe(this.steps(), this._steps.length);
+    },
+
+    appendStepsTo: function (otherSteps, keepLabels) {
+        return otherSteps.concat(keepLabels ? this._steps : this._steps.filter(hasTask));
+    },
+
+    build: function () {
+        var streams = this._steps
+            .filter(hasTask)
+            .map(function (step) { return step.task.apply(null, step.args); })
+        ;
+
+        return combine(streams);
+
+    },
+
+    findLabel: function (label, errorPrefix) {
+        for (var start = 0; start < this._steps.length; start += 1) {
+            if (label === this._steps[start].label && this._steps[start].start) {
                 break;
             }
         }
 
         var length = 1;
-        for (var end = start; end < steps.length; end += 1, length += 1) {
-            if (label === steps[end].label && steps[end].end) {
+        for (var end = start; end < this._steps.length; end += 1, length += 1) {
+            if (label === this._steps[end].label && this._steps[end].end) {
                 return { start: start, end: end, length: length };
             }
         }
 
         throw Error(errorPrefix + label);
-    }
+    },
 
-    function first () {
-        return createPipeline(steps.slice(0), 0);
+    steps: function () {
+        return this._steps.slice();
     }
+};
 
-    function last () {
-        return createPipeline(steps.slice(0), steps.length);
-    }
-
-    function appendStepsTo (otherSteps, keepLabels) {
-        return otherSteps.concat(keepLabels ? steps : steps.filter(hasTask));
-    }
+function hasTask (step) {
+    return !!step.task;
 }
