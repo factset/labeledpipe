@@ -16,7 +16,7 @@
   "homepage": "<redacted>",
   "keywords": [],
   "main": "index.js",
-  "name": "@fds/labeled-lazypipe",
+  "name": "@fds/labeledpipe",
   "publishConfig": {
     "registry": "<redacted>"
   },
