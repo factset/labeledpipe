@@ -22,6 +22,7 @@ describe('labeledpipe', function () {
 
     it('should build a steam', function () {
         var stream = pipeline();
+        // jshint -W030
         expect(stream).to.have.property('writable').to.be.true;
         expect(stream).to.have.property('readable').to.be.true;
         expect(stream).to.have.property('write').to.be.a('function');
@@ -319,7 +320,6 @@ describe('labeledpipe', function () {
             stream.end({});
             expect(pipelineEvents).to.deep.equal([ 'A', 'E', 'D' ]);
         });
-
 
         it('should throw an error if the label doesn\'t exist', function () {
             pipeline = pipeline
