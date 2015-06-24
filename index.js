@@ -1,6 +1,6 @@
 'use strict';
 
-var combine = require('stream-combiner');
+var combine = require('stream-combiner2');
 var slice   = Array.prototype.slice;
 
 module.exports = labeledpipe;
