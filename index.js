@@ -6,21 +6,24 @@ var slice   = Array.prototype.slice;
 module.exports = labeledpipe;
 
 // create labeledPipe
-function labeledpipe () {
-    return new LabeledPipe([], 0);
+function labeledpipe (displayName) {
+    return new LabeledPipe(displayName, [], 0);
 }
 
-function LabeledPipe (steps, cursor) {
-    this._steps  = steps;
-    this._cursor = cursor;
+function LabeledPipe (displayName, steps, cursor) {
+    this._steps            = steps;
+    this._cursor           = cursor;
+    this.build             = this.build.bind(this);
+    this.build.displayName = displayName;
 
-    return Object
+    Object
         .keys(LabeledPipe.prototype)
-        .reduce(function (result, method) {
-            result[method] = this[method].bind(this);
-            return result;
-        }.bind(this), this.build.bind(this))
+        .forEach(function (method) {
+            this.build[method] = this[method].bind(this);
+        }, this)
     ;
+
+    return this.build;
 }
 
 LabeledPipe.prototype = {
@@ -48,17 +51,17 @@ LabeledPipe.prototype = {
 
         var stepsCopy = this.steps();
         stepsCopy.splice.apply(stepsCopy, spliceArgs);
-        return new LabeledPipe(stepsCopy, this._cursor + spliceArgs.length - 2);
+        return new LabeledPipe(this.build.displayName, stepsCopy, this._cursor + spliceArgs.length - 2);
     },
 
     before: function (label) {
         var location = this.findLabel(label, 'Unable to move cursor before step ');
-        return new LabeledPipe(this.steps(), location.start);
+        return new LabeledPipe(this.build.displayName, this.steps(), location.start);
     },
 
     after: function (label) {
         var location = this.findLabel(label, 'Unable to move cursor after step ');
-        return new LabeledPipe(this.steps(), location.end + 1);
+        return new LabeledPipe(this.build.displayName, this.steps(), location.end + 1);
     },
 
     remove: function (label) {
@@ -68,15 +71,15 @@ LabeledPipe.prototype = {
 
         var stepsCopy = this.steps();
         stepsCopy.splice(location.start, location.length);
-        return new LabeledPipe(stepsCopy, newCursor);
+        return new LabeledPipe(this.build.displayName, stepsCopy, newCursor);
     },
 
     first: function () {
-        return new LabeledPipe(this.steps(), 0);
+        return new LabeledPipe(this.build.displayName, this.steps(), 0);
     },
 
     last: function () {
-        return new LabeledPipe(this.steps(), this._steps.length);
+        return new LabeledPipe(this.build.displayName, this.steps(), this._steps.length);
     },
 
     appendStepsTo: function (otherSteps, keepLabels) {

@@ -13,11 +13,15 @@ describe('labeledpipe', function () {
 
     var pipeline;
     beforeEach(function () {
-        pipeline = labeledpipe();
+        pipeline = labeledpipe('testDisplayName');
     });
 
     it('should create a function', function () {
         expect(pipeline).to.be.a('function');
+    });
+
+    it('should set a display name on the buidl fucntion', function () {
+        expect(pipeline).to.have.property('displayName').to.equal('testDisplayName');
     });
 
     it('should build a steam', function () {
