@@ -3,3 +3,4 @@ coverage/
 docs/
 *.tgz
 *.zip
+npm-debug.log
