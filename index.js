@@ -10,6 +10,8 @@ function labeledpipe (displayName) {
     return new LabeledPipe(displayName, [], 0);
 }
 
+labeledpipe.LabeledPipe = LabeledPipe;
+
 function LabeledPipe (displayName, steps, cursor) {
     this._steps            = steps;
     this._cursor           = cursor;
