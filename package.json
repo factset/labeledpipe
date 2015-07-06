@@ -35,7 +35,9 @@
   },
   "version": "1.1.1",
   "dependencies": {
-    "stream-combiner2": "^1.0.2"
+    "duplexer2": "0.0.2",
+    "shallow-copy": "0.0.1",
+    "through2": "^2.0.0"
   },
   "devDependencies": {
     "chai": "^2.2.0",

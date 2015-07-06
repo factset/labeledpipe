@@ -411,3 +411,161 @@ B: Some data
 C: Some data
 after-labeled: Some data
 ```
+
+### Events
+The labeledpipe object exports all of the chainable event emitter methods:
+
+  * addListener
+  * on
+  * once
+  * removeListener
+  * removeAllListeners
+  * setMaxListeners
+
+The allows events handlers to be added to a pipeline as if the pipeline was
+being constructed immediately.
+
+```javascript
+var labeledpipe = require('@fds/labeledpipe');
+var through     = require('through2');
+
+function emitEvent (name) {
+    return through.obj(function (obj, enc, done) {
+        console.log(name + ':', obj);
+        this.emit(name, name);
+        done(null, obj);
+    });
+}
+
+var pipeline = labeledpipe()
+    .pipe(emitEvent, 'A')
+    .on('A', console.log.bind(console, 'Event:'))
+    .pipe(emitEvent, 'B')
+    .on('B', console.log.bind(console, 'Event:'))
+;
+
+var stream = pipeline();
+stream.write('Some data');
+stream.end();
+```
+
+Output:
+
+```bash
+A: Some data
+Event: A
+B: Some data
+Event: B
+```
+
+#### Errors
+
+Error events are a special case in node already.  This treatment continues in
+labeledpipe.  By default, error events on pipeline's streams "bubble up" and are
+re-emitted on the pipeline stream.  For example:
+
+```javascript
+var labeledpipe = require('@fds/labeledpipe');
+var through     = require('through2');
+
+function returnError (name) {
+    return through.obj(function (obj, enc, done) {
+        done(new Error(name));
+    });
+}
+
+var stream = labeledpipe()
+    .pipe(returnError, 'A')
+    ()
+;
+
+stream.on('error', function (error) {
+    console.log('Stream Hander:', error.message);
+});
+
+stream.write('my data');
+stream.end();
+```
+
+Output:
+```bash
+Stream Hander: A
+```
+
+However, if you add an error handler to a pipeline stage, error event from that stage will no longer bubble up to the
+stream.
+
+```javascript
+var labeledpipe = require('@fds/labeledpipe');
+var through     = require('through2');
+
+function returnError (name) {
+    return through.obj(function (obj, enc, done) {
+        done(new Error(name));
+    });
+}
+
+var stream = labeledpipe()
+    .pipe(returnError, 'A')
+    .on('error', function (error) {
+        console.log('Pipeline Hander:', error.message);
+    })
+    ()
+;
+
+stream.on('error', function (error) {
+    console.log('Stream Hander:', error.message);
+});
+
+stream.write('my data');
+stream.end();
+```
+
+Output:
+```bash
+Pipeline Hander: A
+```
+
+The same rules apply to sub pipelines
+
+```javascript
+var labeledpipe = require('@fds/labeledpipe');
+var through     = require('through2');
+
+function returnError (name) {
+    return through.obj(function (obj, enc, done) {
+        done(new Error(name));
+    });
+}
+
+var stream = labeledpipe()
+    .pipe(labeledpipe()
+        .pipe(returnError, 'A')
+        .on('error', function (error) {
+            console.log('Sub-pipeline Hander:', error.message);
+            this.push('More data');
+        })
+        .pipe(returnError, 'B')
+    )
+    .on('error', function (error) {
+        console.log('Pipeline Hander:', error.message);
+        this.push('More data');
+    })
+    .pipe(returnError, 'C')
+    ()
+;
+
+stream.on('error', function (error) {
+    console.log('Stream Hander:', error.message);
+});
+
+stream.write('my data');
+stream.end();
+```
+
+Output:
+```bash
+Sub-pipeline Hander: A
+Pipeline Hander: B
+Stream Hander: C
+```
