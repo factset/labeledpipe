@@ -1,0 +1,27 @@
+{
+    "opts": {
+        "destination": "./docs/",
+        "template":    "node_modules/ink-docstrap/template"
+    },
+    "source": {
+        "include": [ "README.md", "./index.js" ]
+    },
+    "tags": {
+        "allowUnknownTags": false
+    },
+    "templates": {
+        "cleverLinks":           true,
+        "collapseSymbols":       false,
+        "copyright":             "FactSet Research Systems Inc.",
+        "footer":                "",
+        "highlightTutorialCode": true,
+        "inverseNav":            true,
+        "linenums":              true,
+        "navType":               "vertical",
+        "outputSourceFiles":     true,
+        "outputSourcePath":      true,
+        "syntaxTheme":           "dark",
+        "systemName":            "labeledpipe",
+        "theme":                 "cerulean"
+    }
+}

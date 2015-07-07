@@ -5,15 +5,26 @@ var through  = require('through2');
 var copy     = require('shallow-copy');
 var slice    = Array.prototype.slice;
 
-module.exports = labeledpipe;
+module.exports             = labeledpipe;
+module.exports.LabeledPipe = LabeledPipe;
 
 // create labeledPipe
 function labeledpipe (displayName) {
     return new LabeledPipe(displayName, [], 0);
 }
 
-labeledpipe.LabeledPipe = LabeledPipe;
-
+/**
+ * Construct a new LabeledPipe, and return a function bound to the
+ * LabeledPipe's build method.  The returned function also has all of the
+ * LabeledPipe's methods bound to similarly named properties.
+ *
+ * @class
+ * @param {string}  displayName A string used to set the displayName property
+ *                              of the returned function.
+ * @param {Steps[]} steps       A list of LabeledPipe steps for this pipeline.
+ * @param {Number}  cursor      The index of the pipeline steop under the
+ *                              cursor.
+ */
 function LabeledPipe (displayName, steps, cursor) {
     this._steps            = steps;
     this._cursor           = cursor;
@@ -31,6 +42,17 @@ function LabeledPipe (displayName, steps, cursor) {
 }
 
 LabeledPipe.prototype = {
+    /**
+     * Create a new pipeline with task inserted at the current cursor location.
+     *
+     * @param  {string}   [label] Optional. A string that can be used to
+     *                            reference this task
+     * @param  {function} [task]  Optional. A fucntion that returns a tranform
+     *                            stream.
+     * @param  {...*}      args   Any number of arguments that should be passed
+     *                            to task when the pipeline is constructed.
+     * @return {LabeledPipe}      A new LabeledPipe with the task appended.
+     */
     pipe: function (/*[label], [task], [args...]*/) {
         var args       = slice.call(arguments);
         var label      = ('string' === typeof args[0]) && args.shift();
@@ -58,16 +80,34 @@ LabeledPipe.prototype = {
         return new LabeledPipe(this.build.displayName, stepsCopy, this._cursor + spliceArgs.length - 2);
     },
 
+    /**
+     * Construct a new LabeledPipe with the cursor positioned before label.
+     *
+     * @param  {string}      label A label currently in the pipeline.
+     * @return {LabeledPipe}       A new LabeledPipe.
+     */
     before: function (label) {
         var location = findLabel(this, label, 'Unable to move cursor before step ');
         return new LabeledPipe(this.build.displayName, this.steps(), location.start);
     },
 
+    /**
+     * Construct a new LabeledPipe with the cursor positioned after label
+     *
+     * @param  {string}      label A label currently in the pipeline
+     * @return {LabeledPipe}       A new LabeledPipe.
+     */
     after: function (label) {
         var location = findLabel(this, label, 'Unable to move cursor after step ');
         return new LabeledPipe(this.build.displayName, this.steps(), location.end + 1);
     },
 
+    /**
+     * Construct a new LabeledPipe with the task at label removed.
+     *
+     * @param  {string}      label A label currently in the pipeline.
+     * @return {LabeledPipe}       A new LabeledPipe.
+     */
     remove: function (label) {
         var location  = findLabel(this, label, 'Unable to remove step ');
         var newCursor = (this._cursor < location.start) ? this._cursor :
@@ -78,14 +118,31 @@ LabeledPipe.prototype = {
         return new LabeledPipe(this.build.displayName, stepsCopy, newCursor);
     },
 
+    /**
+     * Construct a new LabeledPipe with the cursor positioned before the first task.
+     *
+     * @return {LabeledPipe} A new LabeledPipe.
+     */
     first: function () {
         return new LabeledPipe(this.build.displayName, this.steps(), 0);
     },
 
+    /**
+     * Construct a new LabeledPipe with the cursor positioned after the last task.
+     *
+     * @return {LabeledPipe} A new LabeledPipe.
+     */
     last: function () {
         return new LabeledPipe(this.build.displayName, this.steps(), this._steps.length);
     },
 
+    /**
+     * Append the steps in this pipeline to another list of steps.
+     *
+     * @param  {Step[]}  otherSteps An array of (Labeled|Lazy)Pipe steps
+     * @param  {Boolean} keepLabels True if start and end markers should be appended.
+     * @return {Step[]}             An array of (Labeled|Lazy)Pipe steps.
+     */
     appendStepsTo: function (otherSteps, keepLabels) {
         if (keepLabels) {
             return otherSteps.concat(this._steps);
@@ -94,6 +151,12 @@ LabeledPipe.prototype = {
         return otherSteps.concat(reduceSteps(this.steps()).filter(hasTask));
     },
 
+    /**
+     * Construct the current pipeline.
+     *
+     * @return {stream.Duplex} A duplex stream that wraps all of the steps in
+     *                         the pipeline.
+     */
     build: function () {
         var steps = reduceSteps(this.steps());
 
@@ -103,6 +166,11 @@ LabeledPipe.prototype = {
         return combine(steps);
     },
 
+    /**
+     * Returns a shallow copy of all of the steps in the pipeline.
+     *
+     * @return {Steps[]} A shallow copy of the pipeline's steps.
+     */
     steps: function () {
         return this._steps.slice();
     }
@@ -110,11 +178,71 @@ LabeledPipe.prototype = {
 
 // proxy event emitter methods to the transform under the cursor
 LabeledPipe.CHAINABLE_EVENT_EMITTER_METHODS = [
+    /**
+     * Construct a new LabeledPipe with an event listener added to the pipeline
+     * step under the cursor.
+     *
+     * @function LabeledPipe#addListener
+     * @param {string}   event    The name of the event.
+     * @param {function} listener The function to call when event is emitted.
+     * @return {LabeledPipe} A new LabeledPipe
+     */
     'addListener',
+
+    /**
+     * Construct a new LabeledPipe with an event listener added to the pipeline
+     * step under the cursor.
+     *
+     * @function LabeledPipe#on
+     * @param {string}   event    The name of the event.
+     * @param {function} listener The function to call when event is emitted.
+     * @return {LabeledPipe} A new LabeledPipe
+     */
     'on',
+
+    /**
+     * Construct a new LabeledPipe with an event listener that will only be
+     * called once, added to the pipeline step under the cursor.
+     *
+     * @function LabeledPipe#once
+     * @param {string}   event    The name of the event.
+     * @param {function} listener The function to call when event is emitted.
+     * @return {LabeledPipe}      A new LabeledPipe
+     */
     'once',
+
+    /**
+     * Construct a new LabeledPipe with the listener for the specified event
+     * removed from the pipeline step under the cursor.
+     *
+     * @function LabeledPipe#removeListener
+     * @param {string}   event    The name of the event.
+     * @param {function} listener The listener that should be removed.
+     * @return {LabeledPipe}      A new LabeledPipe
+     */
     'removeListener',
+
+    /**
+     * Construct a new LabeledPipe with all of the listeners removed from the
+     * pipeline step under the cursor.  If an event is specified, only
+     * listeners for that event are removed.
+     *
+     * @function LabeledPipe#removeAllListeners
+     * @param {string} [event] Optional. The name of the event whose listeners
+     *                         should be removed.
+     * @return {LabeledPipe}   A new LabeledPipe
+     */
     'removeAllListeners',
+
+    /**
+     * Construct a new LabeledPipe with the maximum number of listeners for the
+     * pipeline step under the cursor set to max.
+     *
+     * @function LabeledPipe#setMaxListeners
+     * @param {Number} max The number of listeners that can be added before
+     *                     warnings are emitted.
+     * @return {LabeledPipe} A new LabeledPipe
+     */
     'setMaxListeners'
 ];
 
@@ -141,10 +269,30 @@ LabeledPipe
     })
 ;
 
+/**
+ * Returns true if the step has a task function.
+ *
+ * @private
+ * @param  {Step}    step A LabledPipe step
+ * @return {Boolean}      True if the step has a task.
+ */
 function hasTask (step) {
     return !!step.task;
 }
 
+/**
+ * Look through a pipeline and find the start and stop index of a specific
+ * label.
+ *
+ * @private
+ * @param  {LabledPipe} pipe        The labeledpipe to search
+ * @param  {string}     label       The label to searc for
+ * @param  {string}     errorPrefix A string used to prefix error messages if
+ *                                  the label isn't found.
+ * @return {Object}                 An object that contains the index of the
+ *                                  start and end of the label, as well as the
+ *                                  number of steps in that label
+ */
 function findLabel (pipe, label, errorPrefix) {
     for (var start = 0; start < pipe._steps.length; start += 1) {
         if (label === pipe._steps[start].label && pipe._steps[start].start) {
@@ -162,6 +310,13 @@ function findLabel (pipe, label, errorPrefix) {
     throw Error(errorPrefix + label);
 }
 
+/**
+ * Combine sub-pipelines that have event methods attached.
+ *
+ * @private
+ * @param  {Steps[]} steps An array of labeledpipe steps
+ * @return {Steps[]}       An array of labeledpipe steps
+ */
 function reduceSteps (steps) {
     var matching = [];
 
@@ -186,6 +341,14 @@ function reduceSteps (steps) {
     return steps;
 }
 
+/**
+ * Combine steps into a single Duplex stream, and call event methods on the
+ * combined stream.
+ *
+ * @private
+ * @param  {Step[]}        steps An array of labledpipe steps
+ * @return {stream.Duplex}       A single duplex stream
+ */
 function combineEvents (steps) {
     var result = combine(steps);
 
@@ -196,6 +359,15 @@ function combineEvents (steps) {
     return result;
 }
 
+/**
+ * Create a single stream that pipes it's input through each task in steps.
+ * Also bubble error events from each task to the resulting stream object,
+ * unless those events are already handled.
+ *
+ * @private
+ * @param  {Step[]}        steps An array of labeledpipe steps.
+ * @return {stream.Duplex}       A single Duplex stream.
+ */
 function combine (steps) {
     var index;
     var tasks = steps
