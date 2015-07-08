@@ -1,5 +1,11 @@
 # labeledpipe
 
+[![Build Status](<redacted>)](<redacted>)
+[![Coverage Status](<redacted>)](<redacted>)
+[![Dependency Status](<redacted>)](<redacted>)
+[![devDependency Status](<redacted>)](<redacted>)
+[![Documentation Status](<redacted>)](<redacted>)
+
 > [Lazypipe](https://github.com/OverZealous/lazypipe) with optional labels.
 
 Like lazypipe, labeledpipe creates an immutable lazily initialized pipeline.
