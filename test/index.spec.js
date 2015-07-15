@@ -354,6 +354,143 @@ describe('labeledpipe', function () {
             });
         });
 
+        describe('.replace', function () {
+            it('should be able to repalce step in a pipeline', function () {
+                pipeline = pipeline
+                    .pipe('A', reportStage, 'A')
+                    .pipe('B', reportStage, 'B')
+                    .pipe('C', reportStage, 'C')
+                    .replace('B', reportStage, 'D')
+                ;
+
+                var stream = pipeline();
+                stream.end({});
+                expect(pipelineEvents).to.deep.equal([ 'A', 'D', 'C' ]);
+            });
+
+            it('should be able to replace a step in a sub-pipeline', function () {
+                var other = labeledpipe()
+                    .pipe('B', reportStage, 'B')
+                    .pipe('C', reportStage, 'C')
+                ;
+                pipeline = pipeline
+                    .pipe('A', reportStage, 'A')
+                    .pipe(other)
+                    .replace('B', reportStage, 'D')
+                ;
+
+                var stream = pipeline();
+                stream.end({});
+                expect(pipelineEvents).to.deep.equal([ 'A', 'D', 'C' ]);
+            });
+
+            it('should be able to replace a sub-pipeline', function () {
+                var other = labeledpipe()
+                    .pipe('B', reportStage, 'B')
+                    .pipe('C', reportStage, 'C')
+                ;
+                pipeline = pipeline
+                    .pipe('A', reportStage, 'A')
+                    .pipe('other', other)
+                    .pipe('D', reportStage, 'D')
+                    .replace('other', reportStage, 'E')
+                ;
+
+                var stream = pipeline();
+                stream.end({});
+                expect(pipelineEvents).to.deep.equal([ 'A', 'E', 'D' ]);
+            });
+
+            it('should not change cursor position if cursor is before replaced stream', function () {
+                pipeline = pipeline
+                    .pipe('A', reportStage, 'A')
+                    .pipe('B', reportStage, 'B')
+                    .pipe('C', reportStage, 'C')
+                    .before('A')
+                    .replace('B', reportStage, 'E')
+                    .pipe('D', reportStage, 'D')
+                ;
+
+                var stream = pipeline();
+                stream.end({});
+                expect(pipelineEvents).to.deep.equal([ 'D', 'A', 'E', 'C' ]);
+            });
+
+            it('should change cursor position if cursor is after replaced stream', function () {
+                pipeline = pipeline
+                    .pipe('A', reportStage, 'A')
+                    .pipe('B', reportStage, 'B')
+                    .pipe('C', reportStage, 'C')
+                    .after('B')
+                    .replace('B', reportStage, 'E')
+                    .pipe('D', reportStage, 'D')
+                ;
+
+                var stream = pipeline();
+                stream.end({});
+                expect(pipelineEvents).to.deep.equal([ 'A', 'E', 'D', 'C' ]);
+            });
+
+            it('should change cursor position if cursor inside remove stream', function () {
+                var other = labeledpipe()
+                    .pipe('B', reportStage, 'B')
+                    .pipe('C', reportStage, 'C')
+                ;
+                pipeline = pipeline
+                    .pipe('A', reportStage, 'A')
+                    .pipe('other', other)
+                    .pipe('D', reportStage, 'D')
+                    .after('B')
+                    .replace('other', reportStage, 'F')
+                    .pipe('E', reportStage, 'E')
+                ;
+
+                var stream = pipeline();
+                stream.end({});
+                expect(pipelineEvents).to.deep.equal([ 'A', 'F', 'E', 'D' ]);
+            });
+
+            it('should throw an error if the label doesn\'t exist', function () {
+                pipeline = pipeline
+                    .pipe('A', reportStage, 'A')
+                    .pipe('B', reportStage, 'B')
+                ;
+                function removeC () {
+                    pipeline = pipeline.replace('C', reportStage, 'D');
+                }
+
+                expect(removeC).to.throw(Error, 'Unable to remove step C');
+            });
+
+            it('should allow replacing with a labeledpipe', function () {
+                var other = labeledpipe().pipe(reportStage, 'D');
+                pipeline  = pipeline
+                    .pipe('A', reportStage, 'A')
+                    .pipe('B', reportStage, 'B')
+                    .pipe('C', reportStage, 'C')
+                    .replace('B', other)
+                ;
+
+                var stream = pipeline();
+                stream.end({});
+                expect(pipelineEvents).to.deep.equal([ 'A', 'D', 'C' ]);
+            });
+
+            it('should allow replacing with a lazypipe', function () {
+                var other = lazypipe().pipe(reportStage, 'D');
+                pipeline  = pipeline
+                    .pipe('A', reportStage, 'A')
+                    .pipe('B', reportStage, 'B')
+                    .pipe('C', reportStage, 'C')
+                    .replace('B', other)
+                ;
+
+                var stream = pipeline();
+                stream.end({});
+                expect(pipelineEvents).to.deep.equal([ 'A', 'D', 'C' ]);
+            });
+        });
+
         describe('.first', function () {
             it('should change the append location to the beginning', function () {
                 pipeline = pipeline

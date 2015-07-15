@@ -45,37 +45,22 @@ LabeledPipe.prototype = {
     /**
      * Create a new pipeline with task inserted at the current cursor location.
      *
-     * @param  {string}   [label] Optional. A string that can be used to
-     *                            reference this task
-     * @param  {function} [task]  Optional. A fucntion that returns a tranform
-     *                            stream.
-     * @param  {...*}      args   Any number of arguments that should be passed
-     *                            to task when the pipeline is constructed.
-     * @return {LabeledPipe}      A new LabeledPipe with the task appended.
+     * @param  {string}      [label] Optional. A string that can be used to
+     *                               reference this task
+     * @param  {function}    [task]  Optional. A function that returns a
+     *                               tranform stream.
+     * @param  {...*}         args   Any number of arguments that should be
+     *                               passed to task when the pipeline is
+     *                               constructed.
+     * @return {LabeledPipe}         A new LabeledPipe with the task appended.
      */
     pipe: function (/*[label], [task], [args...]*/) {
         var args       = slice.call(arguments);
         var label      = ('string' === typeof args[0]) && args.shift();
         var task       = (args[0] instanceof Function) && args.shift();
-        var spliceArgs = [ this._cursor, 0 ];
+        var spliceArgs = spliceNewTask([ this._cursor, 0 ], label, task, args);
+        var stepsCopy  = this.steps();
 
-        // if we're adding a labeledpipe or a lazypipe, add begining and end markers.
-        if (task.appendStepsTo instanceof Function) {
-            spliceArgs.push({ label: label, start: true, end: false });
-            spliceArgs = task.appendStepsTo(spliceArgs, true);
-            spliceArgs.push({ label: label, start: false, end: true });
-        }
-        else {
-            spliceArgs.push({
-                label: label,
-                task:  task,
-                args:  args,
-                start: true,
-                end:   true
-            });
-        }
-
-        var stepsCopy = this.steps();
         stepsCopy.splice.apply(stepsCopy, spliceArgs);
         return new LabeledPipe(this.build.displayName, stepsCopy, this._cursor + spliceArgs.length - 2);
     },
@@ -115,6 +100,28 @@ LabeledPipe.prototype = {
 
         var stepsCopy = this.steps();
         stepsCopy.splice(location.start, location.length);
+        return new LabeledPipe(this.build.displayName, stepsCopy, newCursor);
+    },
+
+    /**
+     * Construct a new LabeledPipe with task at label replaced by pipeline. The
+     * cursor is not repositioned.
+     *
+     * @param  {string}       label    A label currently in the pipeline
+     * @param  {function}     pipeline A function that returns a transform
+     *                                 stream.
+     * @return {LabeledPipe}           A new LabeledPipe
+     */
+    replace: function (label/*, task, args...*/) {
+        var args       = slice.call(arguments, 1);
+        var task       = (args[0] instanceof Function) && args.shift();
+        var location   = findLabel(this, label, 'Unable to remove step ');
+        var spliceArgs = spliceNewTask([ location.start, location.length ], label, task, args);
+        var newCursor  = (this._cursor < location.start) ? this._cursor :
+            ((this._cursor <= location.end) ? location.start : (this._cursor - location.length)) + 1;
+
+        var stepsCopy  = this.steps();
+        stepsCopy.splice.apply(stepsCopy, spliceArgs);
         return new LabeledPipe(this.build.displayName, stepsCopy, newCursor);
     },
 
@@ -415,4 +422,35 @@ function combine (steps) {
     }
 
     return result;
+}
+
+/**
+ * Add arguments to sliceArgs to add task to an array of steps
+ *
+ * @private
+ * @param  {array}    spliceArgs An arguments array that the task new task
+ *                               should be added to.
+ * @param  {string}   label      The label for the new task.
+ * @param  {function} task       The new task function.
+ * @param  {array}    args       An array of arguments for the task function.
+ * @return {array}               A copy of spliceArgs with the new task added.
+ */
+function spliceNewTask (spliceArgs, label, task, args) {
+    // if we're adding a labeledpipe or a lazypipe, add begining and end markers.
+    if (task.appendStepsTo instanceof Function) {
+        spliceArgs.push({ label: label, start: true, end: false });
+        spliceArgs = task.appendStepsTo(spliceArgs, true);
+        spliceArgs.push({ label: label, start: false, end: true });
+    }
+    else {
+        spliceArgs.push({
+            label: label,
+            task:  task,
+            args:  args,
+            start: true,
+            end:   true
+        });
+    }
+
+    return spliceArgs;
 }
