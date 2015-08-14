@@ -88,6 +88,30 @@ LabeledPipe.prototype = {
     },
 
     /**
+     * Construct a new LabeledPipe with the cursor positioned after the start
+     * of a subpipeline or marker.
+     *
+     * @param  {string}      label A label currently in the pipeline
+     * @return {LabeledPipe}       A new LabeledPipe.
+     */
+    beginningOf: function (label) {
+        var location = findLabel(this, label, 'Unable to move cursor to the beginning of ');
+        return new LabeledPipe(this.build.displayName, this.steps(), location.start + 1);
+    },
+
+    /**
+     * Construct a new LabeledPipe with the cursor positioned before the end of
+     * a subpipeline or marker.
+     *
+     * @param  {string}      label A label currently in the pipeline
+     * @return {LabeledPipe}       A new LabeledPipe.
+     */
+    endOf: function (label) {
+        var location = findLabel(this, label, 'Unable to move cursor to the end of ');
+        return new LabeledPipe(this.build.displayName, this.steps(), location.end);
+    },
+
+    /**
      * Construct a new LabeledPipe with the task at label removed.
      *
      * @param  {string}      label A label currently in the pipeline.
@@ -442,7 +466,7 @@ function spliceNewTask (spliceArgs, label, task, args) {
         spliceArgs = task.appendStepsTo(spliceArgs, true);
         spliceArgs.push({ label: label, start: false, end: true });
     }
-    else {
+    else if (task) {
         spliceArgs.push({
             label: label,
             task:  task,
@@ -450,6 +474,12 @@ function spliceNewTask (spliceArgs, label, task, args) {
             start: true,
             end:   true
         });
+    }
+    else {
+        spliceArgs.push(
+            { label: label, start: true, end: false },
+            { label: label, start: false, end: true }
+        );
     }
 
     return spliceArgs;
