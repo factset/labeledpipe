@@ -121,6 +121,8 @@ commands.  Here is a complete list:
   * `.after(label)`
   * `.first()`
   * `.last()`
+  * `.beginningOf(label)`
+  * `.endOf(label)`
 
 ```javascript
 var labeledpipe = require('@fds/labeledpipe');
@@ -220,6 +222,65 @@ C: Some data
 D: Some data
 ```
 
+### Pseudo Stages
+
+Labeledpipe lets you add labeled stages that do not contain a transform
+stream.  These are useful if you need to provide well know extension points.  To
+make this process easier, labeled pipe provides two special movement operators:
+
+  * `.beginningOf(label)`
+  * `.endOf(label)`
+
+These operators move the cursor to just after the beginning or just before the
+end of the pseudo stage.
+
+```javascript
+var labeledpipe = require('@fds/labeledpipe');
+var through     = require('through2');
+
+// A simple transform stream that reports the stage name to the console.
+function reportStage (name) {
+    return through.obj(function (obj, enc, done) {
+        console.log(name + ':', obj);
+        done(null, obj);
+    });
+}
+
+// create a pipeline
+var pipeline = labeledpipe()
+    .pipe('stage-A', reportStage, 'A')
+    .pipe('extend-here')
+    .pipe('stage-B', reportStage, 'B')
+
+    // Add something right before the end of the extend-here marker
+    .endOf('extend-here')
+    .pipe('stage-Y', reportStage, 'Y')
+
+    // Add something right after the beginning of the extend-here marker
+    .beginningOf('extend-here')
+    .pipe('stage-X', reportStage, 'X')
+
+    // Add something right before the end of the extend-here marker
+    .endOf('extend-here')
+    .pipe('stage-Z', reportStage, 'Z')
+;
+
+// create a stream from the pipeline
+var stream = pipeline();
+stream.write('Some data');
+stream.end();
+```
+
+Output:
+
+```bash
+A: Some data
+X: Some data
+Y: Some data
+Z: Some data
+B: Some data
+```
+
 ### Nested Pipelines
 
 Like lazypipe, labeledpipe also lets you nest pipelines.  This allows common
@@ -295,6 +356,14 @@ var pipeline = labeledpipe()
     .before('common-stage')
     .pipe(reportStage, 'before-common')
 
+    // insert at beginning of common
+    .beginningOf('common-stage')
+    .pipe(reportStage, 'beginning-of-common')
+
+    // insert at end of common
+    .endOf('common-stage')
+    .pipe(reportStage, 'end-of-common')
+
     // insert after common
     .after('common-stage')
     .pipe(reportStage, 'after-common')
@@ -314,10 +383,12 @@ Output:
 
 ```bash
 before-common: Some data
+beginning-of-common: Some data
 A: Some data
 B: Some data
 inside-common: Some data
 C: Some data
+end-of-common: Some data
 after-common: Some data
 ```
 

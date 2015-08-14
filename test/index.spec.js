@@ -93,6 +93,16 @@ describe('labeledpipe', function () {
                 expect(pipelineEvents).to.deep.equal([ 'A' ]);
             });
 
+            it('should allow adding markers', function () {
+                pipeline = pipeline
+                    .pipe(reportStage, 'A')
+                    .pipe('B')
+                ;
+                pipeline();
+                expect(builtStreams).to.deep.equal([ 'A' ]);
+                expect(pipelineEvents).to.deep.equal([]);
+            });
+
             it('should allow piping to labeledpipe', function () {
                 var other = labeledpipe().pipe(reportStage, 'A');
                 pipeline  = pipeline.pipe(other);
@@ -242,6 +252,77 @@ describe('labeledpipe', function () {
                 }
 
                 expect(removeC).to.throw(Error, 'Unable to move cursor after step C');
+            });
+        });
+
+        describe('.beginningOf', function () {
+            it('should change the append location to after beginning of a marker', function () {
+                pipeline = pipeline
+                    .pipe('A', reportStage, 'A')
+                    .pipe('MissingLetters')
+                    .pipe('B', reportStage, 'B')
+
+                    .beginningOf('MissingLetters')
+                    .pipe('Y', reportStage, 'Y')
+                    .beginningOf('MissingLetters')
+                    .pipe('X', reportStage, 'X')
+                ;
+                var stream = pipeline();
+                stream.end({});
+                expect(pipelineEvents).to.deep.equal([ 'A', 'X', 'Y', 'B' ]);
+            });
+
+            it('should change the append location to after beginning of a sub-pipeline', function () {
+                var other = labeledpipe()
+                    .pipe('B', reportStage, 'B')
+                    .pipe('C', reportStage, 'C')
+                ;
+                pipeline = pipeline
+                    .pipe('A', reportStage, 'A')
+                    .pipe('OtherThings', other)
+                    .pipe('D', reportStage, 'D')
+                    .beginningOf('OtherThings')
+                    .pipe('X', reportStage, 'X')
+                ;
+
+                var stream = pipeline();
+                stream.end({});
+                expect(pipelineEvents).to.deep.equal([ 'A', 'X', 'B', 'C', 'D' ]);
+            });
+        });
+
+        describe('.endOf', function () {
+            it('should change the append location to before end of a marker', function () {
+                pipeline = pipeline
+                    .pipe('A', reportStage, 'A')
+                    .pipe('MissingLetters')
+                    .pipe('B', reportStage, 'B')
+
+                    .endOf('MissingLetters')
+                    .pipe('X', reportStage, 'X')
+                ;
+                var stream = pipeline();
+                stream.end({});
+                expect(pipelineEvents).to.deep.equal([ 'A', 'X', 'B' ]);
+            });
+
+            it('should change the append location to before end of a sub-pipeline', function () {
+                var other = labeledpipe()
+                    .pipe('B', reportStage, 'B')
+                    .pipe('C', reportStage, 'C')
+                ;
+                pipeline = pipeline
+                    .pipe('A', reportStage, 'A')
+                    .pipe('OtherThings', other)
+                    .pipe('D', reportStage, 'D')
+
+                    .endOf('OtherThings')
+                    .pipe('X', reportStage, 'X')
+                ;
+
+                var stream = pipeline();
+                stream.end({});
+                expect(pipelineEvents).to.deep.equal([ 'A', 'B', 'C', 'X', 'D' ]);
             });
         });
 
