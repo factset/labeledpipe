@@ -14,7 +14,7 @@ added stages.
 
 ## Installation
 ```bash
-npm install --save-dev @fds/labeledpipe
+npm install --save-dev labeledpipe
 
 ```
 
@@ -25,7 +25,7 @@ npm install --save-dev @fds/labeledpipe
 In this example we use labeledpipe exactly as we would use lazypipe.
 
 ```javascript
-var labeledpipe = require('@fds/labeledpipe');
+var labeledpipe = require('labeledpipe');
 var through     = require('through2');
 
 // A simple transform stream that reports the stage name to the console.
@@ -77,7 +77,7 @@ We can now use the stage labels to change the point at which `.pipe` inserts the
 next pipeline stage.  labeledpipe refers to this point as the cursor.
 
 ```javascript
-var labeledpipe = require('@fds/labeledpipe');
+var labeledpipe = require('labeledpipe');
 var through     = require('through2');
 
 // A simple transform stream that reports the stage name to the console.
@@ -124,7 +124,7 @@ commands.  Here is a complete list:
   * `.endOf(label)`
 
 ```javascript
-var labeledpipe = require('@fds/labeledpipe');
+var labeledpipe = require('labeledpipe');
 var through     = require('through2');
 
 // A simple transform stream that reports the stage name to the console.
@@ -183,7 +183,7 @@ the pipeline.  This allows you to use most of a pipeline created by another
 project
 
 ```javascript
-var labeledpipe = require('@fds/labeledpipe');
+var labeledpipe = require('labeledpipe');
 var through     = require('through2');
 
 // A simple transform stream that reports the stage name to the console.
@@ -234,7 +234,7 @@ These operators move the cursor to just after the beginning or just before the
 end of the pseudo stage.
 
 ```javascript
-var labeledpipe = require('@fds/labeledpipe');
+var labeledpipe = require('labeledpipe');
 var through     = require('through2');
 
 // A simple transform stream that reports the stage name to the console.
@@ -286,7 +286,7 @@ Like lazypipe, labeledpipe also lets you nest pipelines.  This allows common
 pipeline to be written once and used in multiple pipelines.
 
 ```javascript
-var labeledpipe = require('@fds/labeledpipe');
+var labeledpipe = require('labeledpipe');
 var through     = require('through2');
 
 // A simple transform stream that reports the stage name to the console.
@@ -330,7 +330,7 @@ cursor positioning commands to position relative to both the nested pipeline
 itself, and the stages in the nested pipeline:
 
 ```javascript
-var labeledpipe = require('@fds/labeledpipe');
+var labeledpipe = require('labeledpipe');
 var through     = require('through2');
 
 // A simple transform stream that reports the stage name to the console.
@@ -397,7 +397,7 @@ Labeledpipe is designed to work seamlessly with lazypipe.  Lazypipes can be used
 as stages in a labeledpipe:
 
 ```javascript
-var labeledpipe = require('@fds/labeledpipe');
+var labeledpipe = require('labeledpipe');
 var lazypipe    = require('lazypipe');
 var through     = require('through2');
 
@@ -447,7 +447,7 @@ after-lazy: Some data
 Similarly, labeledpipes can be used a stages in a lazypipe:
 
 ```javascript
-var labeledpipe = require('@fds/labeledpipe');
+var labeledpipe = require('labeledpipe');
 var lazypipe    = require('lazypipe');
 var through     = require('through2');
 
@@ -502,7 +502,7 @@ The allows events handlers to be added to a pipeline as if the pipeline was
 being constructed immediately.
 
 ```javascript
-var labeledpipe = require('@fds/labeledpipe');
+var labeledpipe = require('labeledpipe');
 var through     = require('through2');
 
 function emitEvent (name) {
@@ -541,7 +541,7 @@ labeledpipe.  By default, error events on pipeline's streams "bubble up" and are
 re-emitted on the pipeline stream.  For example:
 
 ```javascript
-var labeledpipe = require('@fds/labeledpipe');
+var labeledpipe = require('labeledpipe');
 var through     = require('through2');
 
 function returnError (name) {
@@ -572,7 +572,7 @@ However, if you add an error handler to a pipeline stage, error event from that 
 stream.
 
 ```javascript
-var labeledpipe = require('@fds/labeledpipe');
+var labeledpipe = require('labeledpipe');
 var through     = require('through2');
 
 function returnError (name) {
@@ -605,7 +605,7 @@ Pipeline Hander: A
 The same rules apply to sub pipelines
 
 ```javascript
-var labeledpipe = require('@fds/labeledpipe');
+var labeledpipe = require('labeledpipe');
 var through     = require('through2');
 
 function returnError (name) {
