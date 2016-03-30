@@ -50,9 +50,9 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "codecov": "^1.0.1",
-    "ink-docstrap": "^0.5.4",
-    "istanbul": "^0.3.22",
-    "jscs": "^1.13.1",
+    "ink-docstrap": "^1.1.4",
+    "istanbul": "^0.4.2",
+    "jscs": "^2.11.0",
     "jsdoc": "^3.4.0",
     "jshint": "^2.9.1",
     "lazypipe": "^1.0.1",
