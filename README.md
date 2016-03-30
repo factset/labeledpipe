@@ -4,7 +4,6 @@
 [![codecov.io](https://codecov.io/github/factset/labeledpipe/coverage.svg?branch=master)](https://codecov.io/github/factset/labeledpipe?branch=master)
 [![Dependency Status](https://david-dm.org/factset/labeledpipe.svg)](https://david-dm.org/factset/labeledpipe)
 [![devDependency Status](https://david-dm.org/factset/labeledpipe/dev-status.svg)](https://david-dm.org/factset/labeledpipe#info=devDependencies)
-[![Documentation Status](<redacted>)](<redacted>)
 
 > [Lazypipe](https://github.com/OverZealous/lazypipe) with optional labels.
 
