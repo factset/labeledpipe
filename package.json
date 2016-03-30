@@ -6,8 +6,8 @@
   "bugs": "https://github.com/factset/labeledpipe/issues",
   "description": "Lazypipe with labels",
   "engines": {
-    "node": "^0.12.0",
-    "npm": "^2.5.1"
+    "node": "^5.0.0 || ^4.0.0 || ^0.12.0 || ^0.10.0",
+    "npm": "^3.0.0 || ^2.7.5"
   },
   "files": [
     "index.js"
