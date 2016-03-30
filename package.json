@@ -32,21 +32,20 @@
   "dependencies": {
     "duplexer2": "0.0.2",
     "shallow-copy": "0.0.1",
-    "through2": "^2.0.0"
+    "through2": "^2.0.1"
   },
   "devDependencies": {
-    "chai": "^3.0.0",
+    "chai": "^3.5.0",
     "codecov": "^1.0.1",
-    "ink-docstrap": "^0.5.2",
-    "istanbul": "^0.3.13",
-    "istanbul-cobertura-badger": "0.0.4",
-    "jscs": "^1.12.0",
-    "jsdoc": "^3.3.0-beta3",
-    "jshint": "^2.7.0",
+    "ink-docstrap": "^0.5.4",
+    "istanbul": "^0.3.22",
+    "jscs": "^1.13.1",
+    "jsdoc": "^3.4.0",
+    "jshint": "^2.9.1",
     "lazypipe": "^1.0.1",
-    "mocha": "^2.2.4",
-    "sinon": "^1.14.1",
-    "sinon-chai": "^2.7.0",
-    "through2": "^2.0.0"
+    "mocha": "^2.4.5",
+    "sinon": "^1.17.3",
+    "sinon-chai": "^2.8.0",
+    "through2": "^2.0.1"
   }
 }
