@@ -25,7 +25,7 @@ before_install:
   - npm install --global npm@${NPM_VERSION}
 script:
   - npm run build
-  - npm run test
+  - npm run coverage
 after_success:
   - curl -Lo travis_after_all.py https://git.io/travis_after_all
   - python travis_after_all.py
