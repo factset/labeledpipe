@@ -26,6 +26,7 @@
     "pipeline",
     "pipelines"
   ],
+  "license": "Apache-2.0",
   "main": "index.js",
   "name": "labeledpipe",
   "repository": {
