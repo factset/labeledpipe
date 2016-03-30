@@ -25,7 +25,6 @@
     "checkStyle": "jscs index.js test",
     "test": "mocha test",
     "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha test",
-    "cobertura": "npm run coverage && istanbul report cobertura && node create-coverage-badge.js",
     "docs": "jsdoc --configure .jsdocsrc",
     "build": "npm run lint && npm run checkStyle"
   },
