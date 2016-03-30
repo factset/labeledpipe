@@ -13,7 +13,19 @@
     "index.js"
   ],
   "homepage": "https://github.com/factset/labeledpipe",
-  "keywords": [],
+  "keywords": [
+    "gulp",
+    "gulpfriendly",
+    "stream",
+    "streams",
+    "combine",
+    "lazy",
+    "label",
+    "labels",
+    "labeled",
+    "pipeline",
+    "pipelines"
+  ],
   "main": "index.js",
   "name": "labeledpipe",
   "repository": {
