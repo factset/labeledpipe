@@ -1,7 +1,7 @@
 # labeledpipe
 
-[![Build Status](<redacted>)](<redacted>)
-[![Coverage Status](<redacted>)](<redacted>)
+[![Build Status](https://travis-ci.org/factset/labeledpipe.svg?branch=master)](https://travis-ci.org/factset/labeledpipe)
+[![codecov.io](https://codecov.io/github/factset/labeledpipe/coverage.svg?branch=master)](https://codecov.io/github/factset/labeledpipe?branch=master)
 [![Dependency Status](<redacted>)](<redacted>)
 [![devDependency Status](<redacted>)](<redacted>)
 [![Documentation Status](<redacted>)](<redacted>)
