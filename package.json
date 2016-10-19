@@ -41,7 +41,7 @@
     "docs": "jsdoc --configure .jsdocsrc",
     "build": "npm run lint && npm run checkStyle"
   },
-  "version": "1.4.1",
+  "version": "1.5.0",
   "dependencies": {
     "duplexer2": "0.0.2",
     "shallow-copy": "0.0.1",
