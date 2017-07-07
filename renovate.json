@@ -9,16 +9,16 @@
     "optionalDependencies"
   ],
   "ignoreDeps": [],
-  "pinVersions": true,
+  "pinVersions": false,
   "separateMajorReleases": true,
   "semanticCommits": true,
   "semanticPrefix": "chore(deps): ",
-  "rebaseStalePrs": false,
+  "rebaseStalePrs": true,
   "prCreation": "immediate",
   "automerge": "none",
   "branchName": "renovate/{{depName}}-{{newVersionMajor}}.x",
   "commitMessage": "{{semanticPrefix}}Update dependency {{depName}} to version {{newVersion}}",
-  "labels": [],
+  "labels": ["Refactor"],
   "assignees": [],
   "reviewers": []
 }
