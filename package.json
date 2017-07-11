@@ -48,7 +48,7 @@
     "through2": "^2.0.1"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
+    "chai": "^4.0.0",
     "codecov": "^2.0.0",
     "ink-docstrap": "^1.1.4",
     "istanbul": "^0.4.2",
