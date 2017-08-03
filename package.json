@@ -57,7 +57,7 @@
     "jshint": "^2.9.1",
     "lazypipe": "^1.0.1",
     "mocha": "^3.0.0",
-    "sinon": "^2.0.0",
+    "sinon": "^3.0.0",
     "sinon-chai": "^2.8.0",
     "through2": "^2.0.1"
   }
