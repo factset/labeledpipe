@@ -435,7 +435,7 @@ function combine (steps) {
     for (index = 0; index < tasks.length; index++) {
         /**
          * Calling source.pipe(dest), adds an error handler to the destination
-         * stream.  So we check wether labeledpipe().on() has been used to add
+         * stream.  So we check whether labeledpipe().on() has been used to add
          * an error handler by checking that the number of error handlers is
          * one.  This won't add a handler to the through stream at the begnning
          * of the pipe, but as previously noted, that stream shouldn't error.
