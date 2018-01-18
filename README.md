@@ -1,6 +1,6 @@
 # labeledpipe
 
-[![Build Status](https://travis-ci.org/factset/labeledpipe.svg?branch=master)](https://travis-ci.org/factset/labeledpipe)
+[![CircleCI](https://circleci.com/gh/factset/labeledpipe.svg?style=svg)](https://circleci.com/gh/factset/labeledpipe)
 [![codecov.io](https://codecov.io/github/factset/labeledpipe/coverage.svg?branch=master)](https://codecov.io/github/factset/labeledpipe?branch=master)
 [![Dependency Status](https://david-dm.org/factset/labeledpipe.svg)](https://david-dm.org/factset/labeledpipe)
 [![devDependency Status](https://david-dm.org/factset/labeledpipe/dev-status.svg)](https://david-dm.org/factset/labeledpipe#info=devDependencies)
@@ -13,9 +13,17 @@ labels to control where pipeline stages are added, and even remove previously
 added stages.
 
 ## Installation
-```bash
-npm install --save-dev labeledpipe
 
+To install `labeledpipe` for use in your project please run the following command:
+
+```bash
+yarn add labeledpipe
+```
+
+If you are using the `npm` package manager:
+
+```bash
+npm install labeledpipe
 ```
 
 ## Usage
