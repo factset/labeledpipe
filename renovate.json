@@ -1,24 +1,15 @@
 {
-  "enabled": true,
-  "timezone": "Etc/UTC",
-  "schedule": [],
-  "packageFiles": [],
-  "depTypes": [
-    {"depType": "dependencies", "semanticPrefix": "fix(deps): "},
-    "devDependencies",
-    "optionalDependencies"
-  ],
-  "ignoreDeps": [],
+  "assignees": ["destroyerofbuilds"],
+  "automerge": true,
+  "major": {
+    "automerge": false
+  },
+  "labels": ["refactor"],
+  "lockFileMaintenance": {
+    "enabled": true
+  },
   "pinVersions": false,
-  "separateMajorReleases": true,
-  "semanticCommits": true,
-  "semanticPrefix": "chore(deps): ",
+  "prCreation": "not-pending",
   "rebaseStalePrs": true,
-  "prCreation": "immediate",
-  "automerge": "none",
-  "branchName": "renovate/{{depName}}-{{newVersionMajor}}.x",
-  "commitMessage": "{{semanticPrefix}}Update dependency {{depName}} to version {{newVersion}}",
-  "labels": ["Refactor"],
-  "assignees": [],
-  "reviewers": []
+  "semanticCommits": true
 }
