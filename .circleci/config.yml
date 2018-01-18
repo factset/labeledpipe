@@ -1,0 +1,221 @@
+version: 2
+
+node_4: &node_4
+  docker:
+    - image: node:4
+
+node_6: &node_6
+  docker:
+    - image: node:6
+
+node_8: &node_8
+  docker:
+    - image: node:8
+
+yarn_latest: &yarn_latest
+  steps:
+    - checkout
+    - restore_cache:
+        keys:
+          - dependencies_yarn_latest
+    - run: curl -o- -L https://yarnpkg.com/install.sh | bash
+    - run: yarn install --frozen-lockfile
+    - save_cache:
+        paths:
+          - node_modules
+          - ${HOME}/.cache/yarn
+        key: dependencies_yarn_latest
+    - run: yarn test && ($(yarn bin)/codecov || echo "Codecov did not collect coverage reports")
+
+npm_2: &npm_2
+  steps:
+    - checkout
+    - restore_cache:
+        keys:
+          - dependencies_npm_2
+    - run: npm prune
+    - run:
+        command: |
+          mkdir -p /tmp/npm-install-directory
+          cd /tmp/npm-install-directory
+          npm install npm@2
+          rm -rf /usr/local/lib/node_modules
+          mv node_modules /usr/local/lib/
+    - run: npm update
+    - save_cache:
+        paths:
+          - node_modules
+          - ${HOME}/.npm
+        key: dependencies_npm_2
+    - run: npm test && ($(npm bin)/codecov || echo "Codecov did not collect coverage reports")
+
+npm_3: &npm_3
+  steps:
+    - checkout
+    - restore_cache:
+        keys:
+          - dependencies_npm_3
+    - run: npm prune
+    - run:
+        command: |
+          mkdir -p /tmp/npm-install-directory
+          cd /tmp/npm-install-directory
+          npm install npm@3
+          rm -rf /usr/local/lib/node_modules
+          mv node_modules /usr/local/lib/
+    - run: npm update
+    - save_cache:
+        paths:
+          - node_modules
+          - ${HOME}/.npm
+        key: dependencies_npm_3
+    - run: npm test && ($(npm bin)/codecov || echo "Codecov did not collect coverage reports")
+
+npm_4: &npm_4
+  steps:
+    - checkout
+    - restore_cache:
+        keys:
+          - dependencies_npm_4
+    - run: npm prune
+    - run:
+        command: |
+          mkdir -p /tmp/npm-install-directory
+          cd /tmp/npm-install-directory
+          npm install npm@4
+          rm -rf /usr/local/lib/node_modules
+          mv node_modules /usr/local/lib/
+    - run: npm update
+    - save_cache:
+        paths:
+          - node_modules
+          - ${HOME}/.npm
+        key: dependencies_npm_4
+    - run: npm test && ($(npm bin)/codecov || echo "Codecov did not collect coverage reports")
+
+npm_5: &npm_5
+  steps:
+    - checkout
+    - restore_cache:
+        keys:
+          - dependencies_npm_5
+    - run:
+        command: |
+          mkdir -p /tmp/npm-install-directory
+          cd /tmp/npm-install-directory
+          npm install npm@5
+          rm -rf /usr/local/lib/node_modules
+          mv node_modules /usr/local/lib/
+    - run: npm install
+    - save_cache:
+        paths:
+          - node_modules
+          - ${HOME}/.npm
+        key: dependencies_npm_5
+    - run: npm test && ($(npm bin)/codecov || echo "Codecov did not collect coverage reports")
+
+jobs:
+  node_4_npm_2:
+    <<: [*node_4, *npm_2]
+  node_4_npm_3:
+    <<: [*node_4, *npm_3]
+  node_4_npm_4:
+    <<: [*node_4, *npm_4]
+  node_4_npm_5:
+    <<: [*node_4, *npm_5]
+  node_4_yarn_latest:
+    <<: [*node_4, *yarn_latest]
+  node_6_npm_2:
+    <<: [*node_6, *npm_2]
+  node_6_npm_3:
+    <<: [*node_6, *npm_3]
+  node_6_npm_4:
+    <<: [*node_6, *npm_4]
+  node_6_npm_5:
+    <<: [*node_6, *npm_5]
+  node_6_yarn_latest:
+    <<: [*node_6, *yarn_latest]
+  node_8_npm_2:
+    <<: [*node_8, *npm_2]
+  node_8_npm_3:
+    <<: [*node_8, *npm_3]
+  node_8_npm_4:
+    <<: [*node_8, *npm_4]
+  node_8_npm_5:
+    <<: [*node_8, *npm_5]
+  node_8_yarn_latest:
+    <<: [*node_8, *yarn_latest]
+  release:
+    <<: [*node_8]
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - dependencies_release
+      - run: yarn install --frozen-lockfile
+      - save_cache:
+          paths:
+            - node_modules
+            - ${HOME}/.cache/yarn
+          key: dependencies_release
+      - run: $(yarn bin)/semantic-release-github
+  publish:
+    <<: [*node_8]
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - dependencies_publish
+      - run: yarn install --frozen-lockfile
+      - save_cache:
+          paths:
+            - node_modules
+            - ${HOME}/.cache/yarn
+          key: dependencies_publish
+      - run: $(yarn bin)/npm-publish-git-tag
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - node_4_npm_2
+      - node_4_npm_3
+      - node_4_npm_4
+      - node_4_npm_5
+      - node_4_yarn_latest
+      - node_6_npm_2
+      - node_6_npm_3
+      - node_6_npm_4
+      - node_6_npm_5
+      - node_6_yarn_latest
+      - node_8_npm_2
+      - node_8_npm_3
+      - node_8_npm_4
+      - node_8_npm_5
+      - node_8_yarn_latest
+      - release:
+          filters:
+            branches:
+              only: master
+          requires:
+          - node_4_npm_2
+          - node_4_npm_3
+          - node_4_npm_4
+          - node_4_npm_5
+          - node_4_yarn_latest
+          - node_6_npm_2
+          - node_6_npm_3
+          - node_6_npm_4
+          - node_6_npm_5
+          - node_6_yarn_latest
+          - node_8_npm_2
+          - node_8_npm_3
+          - node_8_npm_4
+          - node_8_npm_5
+          - node_8_yarn_latest
+      - publish:
+          filters:
+            tags:
+              only: /.+/
+          requires:
+            - release
