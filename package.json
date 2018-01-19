@@ -55,7 +55,7 @@
     "jscs": "^3.0.0",
     "jshint": "^2.9.1",
     "lazypipe": "^1.0.1",
-    "mocha": "^3.0.0",
+    "mocha": "^5.0.0",
     "npm-publish-git-tag": "^1.1.14",
     "semantic-release-github": "^3.0.8",
     "sinon": "^2.0.0",
