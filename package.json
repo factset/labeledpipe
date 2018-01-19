@@ -1,18 +1,20 @@
 {
   "author": {
     "name": "Adam Herrmann",
-    "email": "aherrmann@factset.com"
+    "email": "aherrmann@factset.com",
+    "url": "https://github.com/AdamHerrmann"
   },
+  "bin": "",
   "bugs": "https://github.com/factset/labeledpipe/issues",
   "description": "Lazypipe with labels",
   "engines": {
-    "node": "^6.0.0 || ^5.0.0 || ^4.0.0 || ^0.12.0 || ^0.10.0",
-    "npm": "^3.0.0 || ^2.7.5"
+    "node": ">=4.2.0",
+    "npm": ">=2.1.9"
   },
   "files": [
     "index.js"
   ],
-  "homepage": "https://github.com/factset/labeledpipe",
+  "homepage": "https://github.com/factset/labeledpipe#readme",
   "keywords": [
     "gulp",
     "gulpfriendly",
@@ -34,12 +36,11 @@
     "url": "https://github.com/factset/labeledpipe.git"
   },
   "scripts": {
+    "dev": "docker run --rm --user node -v \"$(pwd)\":/app -w /app -it node:4 sh -c \"yarn install; yarn test; bash\"",
     "lint": "jshint index.js test",
     "checkStyle": "jscs index.js test",
-    "test": "mocha test",
-    "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha test",
-    "docs": "jsdoc --configure .jsdocsrc",
-    "build": "npm run lint && npm run checkStyle"
+    "test": "yarn run coverage && yarn run lint && yarn run checkStyle",
+    "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha test"
   },
   "version": "1.5.0",
   "dependencies": {
@@ -50,13 +51,13 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "codecov": "^2.0.0",
-    "ink-docstrap": "^1.1.4",
     "istanbul": "^0.4.2",
     "jscs": "^3.0.0",
-    "jsdoc": "^3.4.0",
     "jshint": "^2.9.1",
     "lazypipe": "^1.0.1",
     "mocha": "^3.0.0",
+    "npm-publish-git-tag": "^1.1.14",
+    "semantic-release-github": "^3.0.8",
     "sinon": "^2.0.0",
     "sinon-chai": "^2.8.0",
     "through2": "^2.0.1"
