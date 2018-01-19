@@ -27,7 +27,7 @@ node_next: &node_next
           - node_modules
           - ${HOME}/.cache/yarn
         key: dependencies_yarn_latest
-    - run: (yarn test || echo "allow node next tests to fail") && ($(yarn bin)/codecov || echo "Codecov did not collect coverage reports")
+    - run: yarn test && ($(yarn bin)/codecov || echo "Codecov did not collect coverage reports")
 
 yarn_latest: &yarn_latest
   steps:
@@ -86,40 +86,17 @@ workflows:
   version: 2
   build:
     jobs:
-      - node_4_npm_2
-      - node_4_npm_3
-      - node_4_npm_4
-      - node_4_npm_5
       - node_4_yarn_latest
-      - node_6_npm_2
-      - node_6_npm_3
-      - node_6_npm_4
-      - node_6_npm_5
       - node_6_yarn_latest
-      - node_8_npm_2
-      - node_8_npm_3
-      - node_8_npm_4
-      - node_8_npm_5
       - node_8_yarn_latest
+      - node_next
       - release:
           filters:
             branches:
               only: master
           requires:
-          - node_4_npm_2
-          - node_4_npm_3
-          - node_4_npm_4
-          - node_4_npm_5
           - node_4_yarn_latest
-          - node_6_npm_2
-          - node_6_npm_3
-          - node_6_npm_4
-          - node_6_npm_5
           - node_6_yarn_latest
-          - node_8_npm_2
-          - node_8_npm_3
-          - node_8_npm_4
-          - node_8_npm_5
           - node_8_yarn_latest
       - publish:
           filters:
