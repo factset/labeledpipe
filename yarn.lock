@@ -2050,9 +2050,9 @@ scoped-regex@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/scoped-regex/-/scoped-regex-1.0.0.tgz#a346bb1acd4207ae70bd7c0c7ca9e566b6baddb8"
 
-semantic-release-github-notifier@^5.0.0:
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/semantic-release-github-notifier/-/semantic-release-github-notifier-5.1.1.tgz#d179506e7d7dd884316c92add2fd2330589e6ca8"
+semantic-release-github-notifier@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/semantic-release-github-notifier/-/semantic-release-github-notifier-6.0.0.tgz#52fa7ba6973acb4674bf405f1cec1e4ea9b4f360"
   dependencies:
     bluebird "^3.4.1"
     conventional-commits-parser "^2.0.0"
@@ -2075,8 +2075,8 @@ semantic-release-github-releaser@^5.0.0:
     lodash "^4.0.1"
 
 semantic-release-github@^3.0.8:
-  version "3.0.10"
-  resolved "https://registry.yarnpkg.com/semantic-release-github/-/semantic-release-github-3.0.10.tgz#975cb780a0307c46709c84c06ca56f38de39bdb2"
+  version "3.0.11"
+  resolved "https://registry.yarnpkg.com/semantic-release-github/-/semantic-release-github-3.0.11.tgz#14512db9cadac2d58caea5dbcc8dfcf4d66a6581"
   dependencies:
     bluebird "^3.3.4"
     commander "^2.9.0"
@@ -2086,7 +2086,7 @@ semantic-release-github@^3.0.8:
     git-latest-semver-tag "^1.0.2"
     git-raw-commits "^1.2.0"
     lodash "^4.7.0"
-    semantic-release-github-notifier "^5.0.0"
+    semantic-release-github-notifier "^6.0.0"
     semantic-release-github-releaser "^5.0.0"
     semver "^5.1.0"
     shelljs "^0.8.0"
