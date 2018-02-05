@@ -1426,8 +1426,8 @@ lodash.keys@^3.0.0:
     lodash.isarray "^3.0.0"
 
 lodash.merge@^4.0.2:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.0.tgz#69884ba144ac33fe699737a6086deffadd0f89c5"
+  version "4.6.1"
+  resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.1.tgz#adc25d9cb99b9391c59624f379fbba60d7111d54"
 
 lodash.restparam@^3.0.0:
   version "3.6.1"
@@ -1476,8 +1476,8 @@ lodash@^3.5.0, lodash@^3.7.0, lodash@~3.10.0:
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
 
 lodash@^4.0.0, lodash@^4.0.1, lodash@^4.13.1, lodash@^4.2.1, lodash@^4.7.0:
-  version "4.17.4"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
+  version "4.17.5"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.5.tgz#99a92d65c0272debe8c96b6057bc8fbfa3bed511"
 
 lolex@^1.6.0:
   version "1.6.0"
@@ -1635,8 +1635,8 @@ normalize-url@2.0.1:
     sort-keys "^2.0.0"
 
 npm-publish-git-tag@^1.1.14:
-  version "1.1.30"
-  resolved "https://registry.yarnpkg.com/npm-publish-git-tag/-/npm-publish-git-tag-1.1.30.tgz#607d4bee833246b185ef7d87797631b7ef771c5f"
+  version "1.1.31"
+  resolved "https://registry.yarnpkg.com/npm-publish-git-tag/-/npm-publish-git-tag-1.1.31.tgz#fedb5d46f842d36f2369c7b38223b04f1ad92460"
   dependencies:
     bluebird "^3.5.0"
     commander "^2.9.0"
@@ -1857,16 +1857,16 @@ qs@~6.3.0:
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.3.2.tgz#e75bd5f6e268122a2a0e0bda630b2550c166502c"
 
 query-string@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/query-string/-/query-string-5.0.1.tgz#6e2b86fe0e08aef682ecbe86e85834765402bd88"
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/query-string/-/query-string-5.1.0.tgz#9583b15fd1307f899e973ed418886426a9976469"
   dependencies:
     decode-uri-component "^0.2.0"
     object-assign "^4.1.0"
     strict-uri-encode "^1.0.0"
 
 rc@^1.0.1:
-  version "1.2.4"
-  resolved "https://registry.yarnpkg.com/rc/-/rc-1.2.4.tgz#a0f606caae2a3b862bbd0ef85482c0125b315fa3"
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/rc/-/rc-1.2.5.tgz#275cd687f6e3b36cc756baa26dfee80a790301fd"
   dependencies:
     deep-extend "~0.4.0"
     ini "~1.3.0"
@@ -2051,8 +2051,8 @@ scoped-regex@^1.0.0:
   resolved "https://registry.yarnpkg.com/scoped-regex/-/scoped-regex-1.0.0.tgz#a346bb1acd4207ae70bd7c0c7ca9e566b6baddb8"
 
 semantic-release-github-notifier@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/semantic-release-github-notifier/-/semantic-release-github-notifier-6.0.0.tgz#52fa7ba6973acb4674bf405f1cec1e4ea9b4f360"
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/semantic-release-github-notifier/-/semantic-release-github-notifier-6.0.1.tgz#17d8c65fd51627e49031034fc68e78b0b0f2fd3f"
   dependencies:
     bluebird "^3.4.1"
     conventional-commits-parser "^2.0.0"
@@ -2065,8 +2065,8 @@ semantic-release-github-notifier@^6.0.0:
     through2 "^2.0.1"
 
 semantic-release-github-releaser@^5.0.0:
-  version "5.0.9"
-  resolved "https://registry.yarnpkg.com/semantic-release-github-releaser/-/semantic-release-github-releaser-5.0.9.tgz#8f6c67e17d9ab0f1ea534095f355f24c6be042d8"
+  version "5.0.10"
+  resolved "https://registry.yarnpkg.com/semantic-release-github-releaser/-/semantic-release-github-releaser-5.0.10.tgz#9cccb7b9bd1e67211e9997147a027c18fcfe51d4"
   dependencies:
     bluebird "^3.3.4"
     conventional-github-releaser "^2.0.0"
@@ -2075,8 +2075,8 @@ semantic-release-github-releaser@^5.0.0:
     lodash "^4.0.1"
 
 semantic-release-github@^3.0.8:
-  version "3.0.11"
-  resolved "https://registry.yarnpkg.com/semantic-release-github/-/semantic-release-github-3.0.11.tgz#14512db9cadac2d58caea5dbcc8dfcf4d66a6581"
+  version "3.0.12"
+  resolved "https://registry.yarnpkg.com/semantic-release-github/-/semantic-release-github-3.0.12.tgz#65290f32174df4f9411ed1e7bf2f076c132c2af4"
   dependencies:
     bluebird "^3.3.4"
     commander "^2.9.0"
@@ -2102,8 +2102,8 @@ semver-regex@^1.0.0:
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.5.0.tgz#dc4bbc7a6ca9d916dee5d43516f0092b58f7b8ab"
 
 set-npm-auth-token-for-ci@^1.0.14:
-  version "1.0.29"
-  resolved "https://registry.yarnpkg.com/set-npm-auth-token-for-ci/-/set-npm-auth-token-for-ci-1.0.29.tgz#07dca8831980634aef18f54d10ad43c6856b554d"
+  version "1.0.30"
+  resolved "https://registry.yarnpkg.com/set-npm-auth-token-for-ci/-/set-npm-auth-token-for-ci-1.0.30.tgz#150dcac09f359547f291edee8a9f44dd0c1e6f96"
   dependencies:
     debug "^3.0.0"
     local-or-home-npmrc "^1.1.0"
@@ -2126,8 +2126,8 @@ shelljs@^0.8.0:
     rechoir "^0.6.2"
 
 shifted-semver-increment@^1.0.3:
-  version "1.0.10"
-  resolved "https://registry.yarnpkg.com/shifted-semver-increment/-/shifted-semver-increment-1.0.10.tgz#eb89c4ad2211a29fa619593fbde219e00597ae6d"
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/shifted-semver-increment/-/shifted-semver-increment-1.0.11.tgz#6922013bee2148074f61191800f00bfd23fa8f5c"
   dependencies:
     debug "^3.1.0"
     semver "^5.4.1"
@@ -2402,8 +2402,8 @@ type-detect@^1.0.0:
   resolved "https://registry.yarnpkg.com/type-detect/-/type-detect-1.0.0.tgz#762217cc06db258ec48908a1298e8b95121e8ea2"
 
 type-detect@^4.0.0:
-  version "4.0.7"
-  resolved "https://registry.yarnpkg.com/type-detect/-/type-detect-4.0.7.tgz#862bd2cf6058ad92799ff5a5b8cf7b6cec726198"
+  version "4.0.8"
+  resolved "https://registry.yarnpkg.com/type-detect/-/type-detect-4.0.8.tgz#7646fb5f18871cfbb7749e69bd39a6388eb7450c"
 
 typedarray@^0.0.6:
   version "0.0.6"
