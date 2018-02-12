@@ -2069,8 +2069,8 @@ semantic-release-github-notifier@^6.0.0:
     through2 "^2.0.1"
 
 semantic-release-github-releaser@^5.0.0:
-  version "5.0.13"
-  resolved "https://registry.yarnpkg.com/semantic-release-github-releaser/-/semantic-release-github-releaser-5.0.13.tgz#c2168aae2f1cae212ea8db9c454f1a3edb2804e3"
+  version "5.0.14"
+  resolved "https://registry.yarnpkg.com/semantic-release-github-releaser/-/semantic-release-github-releaser-5.0.14.tgz#1c2daa159ce119aafa86e92b3d0f516a88a187f8"
   dependencies:
     bluebird "^3.3.4"
     conventional-github-releaser "^2.0.0"
