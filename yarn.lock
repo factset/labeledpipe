@@ -2055,8 +2055,8 @@ scoped-regex@^1.0.0:
   resolved "https://registry.yarnpkg.com/scoped-regex/-/scoped-regex-1.0.0.tgz#a346bb1acd4207ae70bd7c0c7ca9e566b6baddb8"
 
 semantic-release-github-notifier@^6.0.0:
-  version "6.0.3"
-  resolved "https://registry.yarnpkg.com/semantic-release-github-notifier/-/semantic-release-github-notifier-6.0.3.tgz#b11b2435dce5a8e6185c3c94b61b4f8aa3c51db8"
+  version "6.0.4"
+  resolved "https://registry.yarnpkg.com/semantic-release-github-notifier/-/semantic-release-github-notifier-6.0.4.tgz#43f430493981867c4eeab5e322bd44b6abaac1f4"
   dependencies:
     bluebird "^3.4.1"
     conventional-commits-parser "^2.0.0"
@@ -2069,8 +2069,8 @@ semantic-release-github-notifier@^6.0.0:
     through2 "^2.0.1"
 
 semantic-release-github-releaser@^5.0.0:
-  version "5.0.12"
-  resolved "https://registry.yarnpkg.com/semantic-release-github-releaser/-/semantic-release-github-releaser-5.0.12.tgz#fe72c574204a26db4645602e37981e150cec3178"
+  version "5.0.13"
+  resolved "https://registry.yarnpkg.com/semantic-release-github-releaser/-/semantic-release-github-releaser-5.0.13.tgz#c2168aae2f1cae212ea8db9c454f1a3edb2804e3"
   dependencies:
     bluebird "^3.3.4"
     conventional-github-releaser "^2.0.0"
