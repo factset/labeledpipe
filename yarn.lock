@@ -2099,8 +2099,8 @@ semver-regex@^1.0.0:
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.5.0.tgz#dc4bbc7a6ca9d916dee5d43516f0092b58f7b8ab"
 
 set-npm-auth-token-for-ci@^1.0.14:
-  version "1.0.33"
-  resolved "https://registry.yarnpkg.com/set-npm-auth-token-for-ci/-/set-npm-auth-token-for-ci-1.0.33.tgz#a6ec8d1ab3bcb0918cf819c7723b40543d16d346"
+  version "1.0.34"
+  resolved "https://registry.yarnpkg.com/set-npm-auth-token-for-ci/-/set-npm-auth-token-for-ci-1.0.34.tgz#4434b838c5dde580d14bfc7fa5dda4c60bee3214"
   dependencies:
     debug "^3.0.0"
     local-or-home-npmrc "^1.1.0"
