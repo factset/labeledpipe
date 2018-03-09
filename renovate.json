@@ -10,6 +10,5 @@
   },
   "pinVersions": false,
   "prCreation": "not-pending",
-  "rebaseStalePrs": true,
-  "semanticCommits": true
+  "rebaseStalePrs": true
 }

@@ -1,6 +1,4 @@
+/.nyc_output/
 /coverage/
-/docs/
 /node_modules/
-*.tgz
-*.zip
 yarn-error.log
