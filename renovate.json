@@ -1,8 +1,14 @@
 {
   "assignees": ["destroyerofbuilds"],
   "automerge": true,
-  "digest": {
-    "automerge": true
+  "docker": {
+    "digest": {
+      "groupName": "Docker Digests",
+      "group": {
+        "prTitle": "Update and group Docker digests"
+      },
+      "automerge": true
+    }
   },
   "labels": ["refactor"],
   "lockFileMaintenance": {
