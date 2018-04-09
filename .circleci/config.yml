@@ -14,7 +14,7 @@ node_8: &node_8
 
 node_next: &node_next
   docker:
-    - image: node:latest@sha256:0f2443df7bd7e207a32f3eb8f827fe2648152254cf02e5ecb3f30fc1c5e5659b
+    - image: node:latest@sha256:151c8b8a2f1b91a2b4b6cdb122ebf2c6c54809bf750b8ed050b7efdf236a6420
   steps:
     - checkout
     - restore_cache:
