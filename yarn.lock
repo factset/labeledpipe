@@ -742,8 +742,8 @@ copy-descriptor@^0.1.0:
   resolved "https://registry.npmjs.org/copy-descriptor/-/copy-descriptor-0.1.1.tgz#676f6eb3c39997c2ee1ac3a924fd6124748f578d"
 
 core-js@^2.4.0:
-  version "2.5.4"
-  resolved "https://registry.npmjs.org/core-js/-/core-js-2.5.4.tgz#f2c8bf181f2a80b92f360121429ce63a2f0aeae0"
+  version "2.5.5"
+  resolved "https://registry.npmjs.org/core-js/-/core-js-2.5.5.tgz#b14dde936c640c0579a6b50cabcc132dd6127e3b"
 
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
@@ -2357,7 +2357,7 @@ mimic-response@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/mimic-response/-/mimic-response-1.0.0.tgz#df3d3652a73fded6b9b0b24146e6fd052353458e"
 
-minimatch@^3.0.2, minimatch@^3.0.4:
+minimatch@3.0.4, minimatch@^3.0.2, minimatch@^3.0.4:
   version "3.0.4"
   resolved "https://registry.npmjs.org/minimatch/-/minimatch-3.0.4.tgz#5166e286457f03306064be5497e8dbb0c3d32083"
   dependencies:
@@ -2396,8 +2396,8 @@ mkdirp@0.5.1, mkdirp@^0.5.0, mkdirp@^0.5.1:
     minimist "0.0.8"
 
 mocha@^5.0.0:
-  version "5.0.5"
-  resolved "https://registry.npmjs.org/mocha/-/mocha-5.0.5.tgz#e228e3386b9387a4710007a641f127b00be44b52"
+  version "5.1.0"
+  resolved "https://registry.npmjs.org/mocha/-/mocha-5.1.0.tgz#5ff11cc39c0bb65330ac6c41f9086634e3e3f686"
   dependencies:
     browser-stdout "1.3.1"
     commander "2.11.0"
@@ -2407,6 +2407,7 @@ mocha@^5.0.0:
     glob "7.1.2"
     growl "1.10.3"
     he "1.1.1"
+    minimatch "3.0.4"
     mkdirp "0.5.1"
     supports-color "4.4.0"
 
@@ -2475,8 +2476,8 @@ normalize-url@2.0.1:
     sort-keys "^2.0.0"
 
 npm-publish-git-tag@^1.1.14:
-  version "1.1.35"
-  resolved "https://registry.npmjs.org/npm-publish-git-tag/-/npm-publish-git-tag-1.1.35.tgz#3b2e5944231e951c60e4ba7650d9c7a522731a85"
+  version "1.1.36"
+  resolved "https://registry.npmjs.org/npm-publish-git-tag/-/npm-publish-git-tag-1.1.36.tgz#b33f45a943a3d2c128106cef8618347d231cb3ec"
   dependencies:
     bluebird "^3.5.0"
     commander "^2.9.0"
@@ -3021,8 +3022,8 @@ resolve-url@^0.2.1:
   resolved "https://registry.npmjs.org/resolve-url/-/resolve-url-0.2.1.tgz#2c637fe77c893afd2a663fe21aa9080068e2052a"
 
 resolve@^1.1.6:
-  version "1.7.0"
-  resolved "https://registry.npmjs.org/resolve/-/resolve-1.7.0.tgz#2bdf5374811207285df0df652b78f118ab8f3c5e"
+  version "1.7.1"
+  resolved "https://registry.npmjs.org/resolve/-/resolve-1.7.1.tgz#aadd656374fd298aee895bc026b8297418677fd3"
   dependencies:
     path-parse "^1.0.5"
 
@@ -3094,8 +3095,8 @@ scoped-regex@^1.0.0:
   resolved "https://registry.npmjs.org/scoped-regex/-/scoped-regex-1.0.0.tgz#a346bb1acd4207ae70bd7c0c7ca9e566b6baddb8"
 
 semantic-release-github-notifier@^6.0.0:
-  version "6.0.8"
-  resolved "https://registry.npmjs.org/semantic-release-github-notifier/-/semantic-release-github-notifier-6.0.8.tgz#3513b0c5af525715d02f0afe427aef67c9c29b83"
+  version "6.0.9"
+  resolved "https://registry.npmjs.org/semantic-release-github-notifier/-/semantic-release-github-notifier-6.0.9.tgz#f48bef86ed41f0ff042f352d66610b8734b39f56"
   dependencies:
     bluebird "^3.4.1"
     conventional-commits-parser "^2.0.0"
@@ -3108,8 +3109,8 @@ semantic-release-github-notifier@^6.0.0:
     through2 "^2.0.1"
 
 semantic-release-github-releaser@^5.0.0:
-  version "5.0.17"
-  resolved "https://registry.npmjs.org/semantic-release-github-releaser/-/semantic-release-github-releaser-5.0.17.tgz#9cda11d34b76ea6202d69279406aa0ef3db2120d"
+  version "5.0.18"
+  resolved "https://registry.npmjs.org/semantic-release-github-releaser/-/semantic-release-github-releaser-5.0.18.tgz#aac907aa2d8c8c9025ee0e151695e671ae5ea82f"
   dependencies:
     bluebird "^3.3.4"
     conventional-github-releaser "^2.0.0"
@@ -3118,8 +3119,8 @@ semantic-release-github-releaser@^5.0.0:
     lodash "^4.0.1"
 
 semantic-release-github@^3.0.8:
-  version "3.1.2"
-  resolved "https://registry.npmjs.org/semantic-release-github/-/semantic-release-github-3.1.2.tgz#1ba94e44eca215d211e2b9533dd5ed7e9db002a0"
+  version "3.1.3"
+  resolved "https://registry.npmjs.org/semantic-release-github/-/semantic-release-github-3.1.3.tgz#9629d8261f67501da39a4159e914824012345d89"
   dependencies:
     bluebird "^3.3.4"
     commander "^2.9.0"
@@ -3150,8 +3151,8 @@ set-blocking@^2.0.0:
   resolved "https://registry.npmjs.org/set-blocking/-/set-blocking-2.0.0.tgz#045f9782d011ae9a6803ddd382b24392b3d890f7"
 
 set-npm-auth-token-for-ci@^1.0.14:
-  version "1.0.36"
-  resolved "https://registry.npmjs.org/set-npm-auth-token-for-ci/-/set-npm-auth-token-for-ci-1.0.36.tgz#b6e431c9a7dee3eca4f472d8b0c59e46c90e115b"
+  version "1.0.37"
+  resolved "https://registry.npmjs.org/set-npm-auth-token-for-ci/-/set-npm-auth-token-for-ci-1.0.37.tgz#a6ea2c2bdaa97c91ecdfe858753fa446316fc744"
   dependencies:
     debug "^3.0.0"
     local-or-home-npmrc "^1.1.0"
@@ -3198,8 +3199,8 @@ shelljs@^0.8.0:
     rechoir "^0.6.2"
 
 shifted-semver-increment@^1.0.3:
-  version "1.0.17"
-  resolved "https://registry.npmjs.org/shifted-semver-increment/-/shifted-semver-increment-1.0.17.tgz#9263748dc147a1521b8e010c3300a0f2cec4a644"
+  version "1.0.18"
+  resolved "https://registry.npmjs.org/shifted-semver-increment/-/shifted-semver-increment-1.0.18.tgz#d33dffe261d7cbca28f5069745077150b64fd525"
   dependencies:
     debug "^3.1.0"
     semver "^5.4.1"
