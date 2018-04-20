@@ -560,10 +560,9 @@ describe('labeledpipe', function () {
             pipeline = pipeline.pipe(eventSpy, method);
             pipeline = pipeline[method].apply(pipeline, eventArgs[method]);
 
-            expect(spies[method]).to.not.be.defined;
+            expect(spies[method]).to.be.undefined;
 
             var stream = pipeline();
-            expect(spies[method]).to.be.defined;
             expect(spies[method]).to.have.been.calledWith(eventArgs[method][0]);
             stream.end();
           });
@@ -575,10 +574,9 @@ describe('labeledpipe', function () {
           it('should handle events when passed to a lazypipe', function () {
             pipeline = pipeline.pipe(eventSpy, method);
             pipeline = pipeline[method].apply(pipeline, eventArgs[method]);
-            expect(spies[method]).to.not.be.defined;
+            expect(spies[method]).to.be.undefined;
 
             var stream = lazypipe().pipe(pipeline)();
-            expect(spies[method]).to.be.defined;
             expect(spies[method]).to.have.been.calledWith(eventArgs[method][0]);
             stream.end();
           });
