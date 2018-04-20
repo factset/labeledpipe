@@ -429,7 +429,7 @@ function combine(steps) {
     tasks[index - 1].pipe(tasks[index]);
   }
 
-  var result = duplexer({bubbleErrors: false}, tasks[0], tasks[tasks.length - 1]);
+  var result = duplexer({bubbleErrors: false, objectMode: true}, tasks[0], tasks[tasks.length - 1]);
   for (index = 0; index < tasks.length; index++) {
     /**
          * Calling source.pipe(dest), adds an error handler to the destination
