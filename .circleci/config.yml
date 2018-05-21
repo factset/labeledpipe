@@ -2,19 +2,19 @@ version: 2
 
 node_4: &node_4
   docker:
-    - image: node:4@sha256:db9cbb9420b52d591e36eb66a019995f5d2c3a05b5087918ea1ab0ba3949b74d
+    - image: node:4@sha256:41d0ad2557ea2a9e57e1a458c1d659e92f601586e07dcffef74c9cef542f6f6e
 
 node_6: &node_6
   docker:
-    - image: node:6@sha256:4c90d660e51d7187c01f3001d95c8c922b084a83f5001660ef16986301e8a860
+    - image: node:6@sha256:3345a962ab93dd1fb7591e1842a0dc9322e69a5560be1b6d97b293804d434cc3
 
 node_8: &node_8
   docker:
-    - image: node:8@sha256:26e4c77f9f797c3993780943239fa79419f011dd93ae4e0097089e2145aeaa24
+    - image: node:8@sha256:ceb6e9e47ec034664e795d7b7e45f288e2b47a5a51cc6015dc7d672252900788
 
 node_next: &node_next
   docker:
-    - image: node:latest@sha256:bd7b9aaf77ab2ce1e83e7e79fc0969229214f9126ced222c64eab49dc0bdae90
+    - image: node:latest@sha256:492f2a28fbc54cf96eb0eea3faa2486179c71b3154a6b3e6b89b6c36ef7f59eb
   steps:
     - checkout
     - restore_cache:
