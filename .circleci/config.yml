@@ -1,9 +1,5 @@
 version: 2
 
-node_4: &node_4
-  docker:
-    - image: node:4@sha256:41d0ad2557ea2a9e57e1a458c1d659e92f601586e07dcffef74c9cef542f6f6e
-
 node_6: &node_6
   docker:
     - image: node:6@sha256:3345a962ab93dd1fb7591e1842a0dc9322e69a5560be1b6d97b293804d434cc3
@@ -15,19 +11,6 @@ node_8: &node_8
 node_next: &node_next
   docker:
     - image: node:latest@sha256:492f2a28fbc54cf96eb0eea3faa2486179c71b3154a6b3e6b89b6c36ef7f59eb
-  steps:
-    - checkout
-    - restore_cache:
-        keys:
-          - dependencies_yarn_latest
-    - run: curl -o- -L https://yarnpkg.com/install.sh | bash
-    - run: yarn install --frozen-lockfile
-    - save_cache:
-        paths:
-          - node_modules
-          - ${HOME}/.cache/yarn
-        key: dependencies_yarn_latest
-    - run: yarn test && ($(yarn bin)/codecov || echo "Codecov did not collect coverage reports")
 
 yarn_latest: &yarn_latest
   steps:
@@ -42,30 +25,29 @@ yarn_latest: &yarn_latest
           - node_modules
           - ${HOME}/.cache/yarn
         key: dependencies_yarn_latest
-    - run: yarn test && ($(yarn bin)/codecov || echo "Codecov did not collect coverage reports")
+    - run: yarn test
+    - run: ($(yarn bin)/codecov || echo "Codecov did not collect coverage reports")
 
 jobs:
-  node_4_yarn_latest:
-    <<: [*node_4, *yarn_latest]
   node_6_yarn_latest:
     <<: [*node_6, *yarn_latest]
   node_8_yarn_latest:
     <<: [*node_8, *yarn_latest]
   node_next:
-    <<: [*node_next]
-  release:
+    <<: [*node_next, *yarn_latest]
+  deliver:
     <<: [*node_8]
     steps:
       - checkout
       - restore_cache:
           keys:
-            - dependencies_release
+            - dependencies_deliver
       - run: yarn install --frozen-lockfile
       - save_cache:
           paths:
             - node_modules
             - ${HOME}/.cache/yarn
-          key: dependencies_release
+          key: dependencies_deliver
       - run: $(yarn bin)/semantic-release-github
   publish:
     <<: [*node_8]
@@ -86,16 +68,14 @@ workflows:
   version: 2
   build:
     jobs:
-      - node_4_yarn_latest
       - node_6_yarn_latest
       - node_8_yarn_latest
       - node_next
-      - release:
+      - deliver:
           filters:
             branches:
               only: master
           requires:
-          - node_4_yarn_latest
           - node_6_yarn_latest
           - node_8_yarn_latest
       - publish:
@@ -103,4 +83,4 @@ workflows:
             tags:
               only: /.+/
           requires:
-            - release
+            - deliver
