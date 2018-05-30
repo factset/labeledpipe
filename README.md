@@ -2,8 +2,6 @@
 
 [![CircleCI](https://circleci.com/gh/factset/labeledpipe.svg?style=svg)](https://circleci.com/gh/factset/labeledpipe)
 [![codecov.io](https://codecov.io/github/factset/labeledpipe/coverage.svg?branch=master)](https://codecov.io/github/factset/labeledpipe?branch=master)
-[![Dependency Status](https://david-dm.org/factset/labeledpipe.svg)](https://david-dm.org/factset/labeledpipe)
-[![devDependency Status](https://david-dm.org/factset/labeledpipe/dev-status.svg)](https://david-dm.org/factset/labeledpipe#info=devDependencies)
 
 > [Lazypipe](https://github.com/OverZealous/lazypipe) with optional labels.
 
@@ -714,7 +712,7 @@ Please read our [contributing guide](https://github.com/factset/labeledpipe/blob
 
 ## Copyright
 
-Copyright 2017 FactSet Research Systems Inc
+Copyright 2018 FactSet Research Systems Inc
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
