@@ -55,7 +55,7 @@
     "npm-publish-git-tag": "^1.1.14",
     "nyc": "^11.4.1",
     "semantic-release-github": "^3.0.8",
-    "sinon": "^4.0.0",
+    "sinon": "^5.0.0",
     "sinon-chai": "^3.0.0",
     "through2": "^2.0.1"
   }
