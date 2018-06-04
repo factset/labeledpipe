@@ -51,7 +51,7 @@
     "eslint-config-xo-space": "^0.18.0",
     "lazypipe": "^1.0.1",
     "mocha": "^5.0.0",
-    "npm-publish-git-tag": "^1.1.14",
+    "npm-publish-git-tag": "^2.0.0",
     "nyc": "^12.0.0",
     "semantic-release-github": "^3.0.8",
     "sinon": "^5.0.0",
