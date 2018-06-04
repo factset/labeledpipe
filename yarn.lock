@@ -2305,9 +2305,9 @@ normalize-url@2.0.1:
     query-string "^5.0.1"
     sort-keys "^2.0.0"
 
-npm-publish-git-tag@^1.1.14:
-  version "1.1.43"
-  resolved "https://registry.npmjs.org/npm-publish-git-tag/-/npm-publish-git-tag-1.1.43.tgz#42a4647d9091f484c179a9cbc9bce6befbe720e7"
+npm-publish-git-tag@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/npm-publish-git-tag/-/npm-publish-git-tag-2.0.0.tgz#57e1bb340d4ada43f0fdeb8e16c417b82c64c795"
   dependencies:
     bluebird "^3.5.0"
     commander "^2.9.0"
