@@ -17,7 +17,12 @@
   "major": {
     "automerge": false
   },
+  "node": {
+    "enabled": true,
+    "supportPolicy": ["lts", "current"]
+  },
   "pinVersions": false,
   "prCreation": "not-pending",
-  "rebaseStalePrs": true
+  "rebaseStalePrs": true,
+  "unpublishSafe": true
 }
