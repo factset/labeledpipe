@@ -12,29 +12,28 @@ node_next: &node_next
   docker:
     - image: node:latest@sha256:c00e4cb3acfb2a0c4997ddb0e809cba37f9f6cce43efa9a6e6f7f1a79e094ab5
 
-yarn_latest: &yarn_latest
+test_plan: &test_plan
   steps:
     - checkout
     - restore_cache:
         keys:
-          - dependencies_yarn_latest
-    - run: curl -o- -L https://yarnpkg.com/install.sh | bash
+          - dependencies_test_plan
     - run: yarn install --frozen-lockfile
     - save_cache:
         paths:
           - node_modules
           - ${HOME}/.cache/yarn
-        key: dependencies_yarn_latest
+        key: dependencies_test_plan
     - run: yarn test
-    - run: ($(yarn bin)/codecov || echo "Codecov did not collect coverage reports")
+    - run: $(yarn bin)/codecov || echo "CodeCov did not collect coverage reports"
 
 jobs:
-  node_6_yarn_latest:
-    <<: [*node_6, *yarn_latest]
-  node_8_yarn_latest:
-    <<: [*node_8, *yarn_latest]
+  node_6_test_plan:
+    <<: [*node_6, *test_plan]
+  node_8_test_plan:
+    <<: [*node_8, *test_plan]
   node_next:
-    <<: [*node_next, *yarn_latest]
+    <<: [*node_next, *test_plan]
   deliver:
     <<: [*node_8]
     steps:
@@ -49,38 +48,40 @@ jobs:
             - ${HOME}/.cache/yarn
           key: dependencies_deliver
       - run: $(yarn bin)/semantic-release-github
-  publish:
+  deploy:
     <<: [*node_8]
     steps:
       - checkout
       - restore_cache:
           keys:
-            - dependencies_publish
+            - dependencies_deploy
       - run: yarn install --frozen-lockfile
       - save_cache:
           paths:
             - node_modules
             - ${HOME}/.cache/yarn
-          key: dependencies_publish
+          key: dependencies_deploy
       - run: $(yarn bin)/npm-publish-git-tag
 
 workflows:
   version: 2
   build:
     jobs:
-      - node_6_yarn_latest
-      - node_8_yarn_latest
+      - node_6_test_plan
+      - node_8_test_plan
       - node_next
       - deliver:
           filters:
             branches:
               only: master
           requires:
-          - node_6_yarn_latest
-          - node_8_yarn_latest
-      - publish:
+            - node_6_test_plan
+            - node_8_test_plan
+          context: github-interaction
+      - deploy:
           filters:
             tags:
               only: /.+/
           requires:
             - deliver
+          context: npm-interaction
