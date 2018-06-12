@@ -32,7 +32,7 @@ jobs:
     <<: [*node_6, *test_plan]
   node_8_test_plan:
     <<: [*node_8, *test_plan]
-  node_next:
+  node_next_test_plan:
     <<: [*node_next, *test_plan]
   deliver:
     <<: [*node_8]
@@ -69,7 +69,7 @@ workflows:
     jobs:
       - node_6_test_plan
       - node_8_test_plan
-      - node_next
+      - node_next_test_plan
       - deliver:
           filters:
             branches:
