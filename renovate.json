@@ -1,5 +1,4 @@
 {
-  "assignees": ["destroyerofbuilds"],
   "automerge": true,
   "docker": {
     "digest": {
