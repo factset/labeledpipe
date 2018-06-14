@@ -2,6 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/factset/labeledpipe.svg?style=svg)](https://circleci.com/gh/factset/labeledpipe)
 [![codecov.io](https://codecov.io/github/factset/labeledpipe/coverage.svg?branch=master)](https://codecov.io/github/factset/labeledpipe?branch=master)
+[![Gitter](https://badges.gitter.im/factset/labeledpipe.svg)](https://gitter.im/factset/labeledpipe?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 > [Lazypipe](https://github.com/OverZealous/lazypipe) with optional labels.
 
