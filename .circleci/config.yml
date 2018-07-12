@@ -17,13 +17,13 @@ test_plan: &test_plan
     - checkout
     - restore_cache:
         keys:
-          - dependencies_test_plan
+          - v1-dependencies_test_plan
     - run: yarn install --frozen-lockfile
     - save_cache:
         paths:
           - node_modules
           - ${HOME}/.cache/yarn
-        key: dependencies_test_plan
+        key: v1-dependencies_test_plan
     - run: yarn test
     - run: $(yarn bin)/codecov || echo "CodeCov did not collect coverage reports"
 
@@ -40,13 +40,13 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - dependencies_deliver
+            - v1-dependencies_deliver
       - run: yarn install --frozen-lockfile
       - save_cache:
           paths:
             - node_modules
             - ${HOME}/.cache/yarn
-          key: dependencies_deliver
+          key: v1-dependencies_deliver
       - run: $(yarn bin)/semantic-release-github
   deploy:
     <<: [*node_8]
@@ -54,13 +54,13 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - dependencies_deploy
+            - v1-dependencies_deploy
       - run: yarn install --frozen-lockfile
       - save_cache:
           paths:
             - node_modules
             - ${HOME}/.cache/yarn
-          key: dependencies_deploy
+          key: v1-dependencies_deploy
       - run: $(yarn bin)/npm-publish-git-tag
 
 workflows:
