@@ -1,15 +1,3 @@
 {
-  "extends": "xo-space",
-  "rules": {
-    "camelcase": [
-      "error",
-      {
-        "properties": "never"
-      }
-    ],
-    "comma-dangle": [
-      "error",
-      "always-multiline"
-    ]
-  }
+  "extends": "@hbetts/eslint-config"
 }

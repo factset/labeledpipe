@@ -1,9 +1,9 @@
 'use strict';
 
-var duplexer = require('duplexer2');
-var through = require('through2');
-var copy = require('shallow-copy');
-var slice = Array.prototype.slice;
+const duplexer = require('duplexer2');
+const through = require('through2');
+const copy = require('shallow-copy');
+const slice = Array.prototype.slice;
 
 module.exports = labeledpipe;
 module.exports.LabeledPipe = LabeledPipe;
@@ -52,12 +52,12 @@ LabeledPipe.prototype = {
      *                               constructed.
      * @return {LabeledPipe}         A new LabeledPipe with the task appended.
      */
-  pipe: function (/* [label], [task], [args...] */) {
-    var args = slice.call(arguments);
-    var label = (typeof args[0] === 'string') && args.shift();
-    var task = (args[0] instanceof Function) && args.shift();
-    var spliceArgs = spliceNewTask([this._cursor, 0], label, task, args);
-    var stepsCopy = this.steps();
+  pipe(/* [label], [task], [args...] */) {
+    const args = slice.call(arguments);
+    const label = (typeof args[0] === 'string') && args.shift();
+    const task = (args[0] instanceof Function) && args.shift();
+    const spliceArgs = spliceNewTask([this._cursor, 0], label, task, args);
+    const stepsCopy = this.steps();
 
     stepsCopy.splice.apply(stepsCopy, spliceArgs);
     return new LabeledPipe(this.build.displayName, stepsCopy, this._cursor + spliceArgs.length - 2);
@@ -69,8 +69,8 @@ LabeledPipe.prototype = {
      * @param  {string}      label A label currently in the pipeline.
      * @return {LabeledPipe}       A new LabeledPipe.
      */
-  before: function (label) {
-    var location = findLabel(this, label, 'Unable to move cursor before step ');
+  before(label) {
+    const location = findLabel(this, label, 'Unable to move cursor before step ');
     return new LabeledPipe(this.build.displayName, this.steps(), location.start);
   },
 
@@ -80,8 +80,8 @@ LabeledPipe.prototype = {
      * @param  {string}      label A label currently in the pipeline
      * @return {LabeledPipe}       A new LabeledPipe.
      */
-  after: function (label) {
-    var location = findLabel(this, label, 'Unable to move cursor after step ');
+  after(label) {
+    const location = findLabel(this, label, 'Unable to move cursor after step ');
     return new LabeledPipe(this.build.displayName, this.steps(), location.end + 1);
   },
 
@@ -92,8 +92,8 @@ LabeledPipe.prototype = {
      * @param  {string}      label A label currently in the pipeline
      * @return {LabeledPipe}       A new LabeledPipe.
      */
-  beginningOf: function (label) {
-    var location = findLabel(this, label, 'Unable to move cursor to the beginning of ');
+  beginningOf(label) {
+    const location = findLabel(this, label, 'Unable to move cursor to the beginning of ');
     return new LabeledPipe(this.build.displayName, this.steps(), location.start + 1);
   },
 
@@ -104,8 +104,8 @@ LabeledPipe.prototype = {
      * @param  {string}      label A label currently in the pipeline
      * @return {LabeledPipe}       A new LabeledPipe.
      */
-  endOf: function (label) {
-    var location = findLabel(this, label, 'Unable to move cursor to the end of ');
+  endOf(label) {
+    const location = findLabel(this, label, 'Unable to move cursor to the end of ');
     return new LabeledPipe(this.build.displayName, this.steps(), location.end);
   },
 
@@ -115,12 +115,12 @@ LabeledPipe.prototype = {
      * @param  {string}      label A label currently in the pipeline.
      * @return {LabeledPipe}       A new LabeledPipe.
      */
-  remove: function (label) {
-    var location = findLabel(this, label, 'Unable to remove step ');
-    var newCursor = (this._cursor < location.start) ? this._cursor :
+  remove(label) {
+    const location = findLabel(this, label, 'Unable to remove step ');
+    const newCursor = (this._cursor < location.start) ? this._cursor :
       (this._cursor <= location.end) ? location.start : (this._cursor - location.length);
 
-    var stepsCopy = this.steps();
+    const stepsCopy = this.steps();
     stepsCopy.splice(location.start, location.length);
     return new LabeledPipe(this.build.displayName, stepsCopy, newCursor);
   },
@@ -134,15 +134,15 @@ LabeledPipe.prototype = {
      *                                 stream.
      * @return {LabeledPipe}           A new LabeledPipe
      */
-  replace: function (label/* , task, args... */) {
-    var args = slice.call(arguments, 1);
-    var task = (args[0] instanceof Function) && args.shift();
-    var location = findLabel(this, label, 'Unable to remove step ');
-    var spliceArgs = spliceNewTask([location.start, location.length], label, task, args);
-    var newCursor = (this._cursor < location.start) ? this._cursor :
+  replace(label/* , task, args... */) {
+    const args = slice.call(arguments, 1);
+    const task = (args[0] instanceof Function) && args.shift();
+    const location = findLabel(this, label, 'Unable to remove step ');
+    const spliceArgs = spliceNewTask([location.start, location.length], label, task, args);
+    const newCursor = (this._cursor < location.start) ? this._cursor :
       ((this._cursor <= location.end) ? location.start : (this._cursor - location.length)) + 1;
 
-    var stepsCopy = this.steps();
+    const stepsCopy = this.steps();
     stepsCopy.splice.apply(stepsCopy, spliceArgs);
     return new LabeledPipe(this.build.displayName, stepsCopy, newCursor);
   },
@@ -152,7 +152,7 @@ LabeledPipe.prototype = {
      *
      * @return {LabeledPipe} A new LabeledPipe.
      */
-  first: function () {
+  first() {
     return new LabeledPipe(this.build.displayName, this.steps(), 0);
   },
 
@@ -161,7 +161,7 @@ LabeledPipe.prototype = {
      *
      * @return {LabeledPipe} A new LabeledPipe.
      */
-  last: function () {
+  last() {
     return new LabeledPipe(this.build.displayName, this.steps(), this._steps.length);
   },
 
@@ -172,7 +172,7 @@ LabeledPipe.prototype = {
      * @param  {Boolean} keepLabels True if start and end markers should be appended.
      * @return {Step[]}             An array of (Labeled|Lazy)Pipe steps.
      */
-  appendStepsTo: function (otherSteps, keepLabels) {
+  appendStepsTo(otherSteps, keepLabels) {
     if (keepLabels) {
       return otherSteps.concat(this._steps);
     }
@@ -186,8 +186,8 @@ LabeledPipe.prototype = {
      * @return {stream.Duplex} A duplex stream that wraps all of the steps in
      *                         the pipeline.
      */
-  build: function () {
-    var steps = reduceSteps(this.steps());
+  build() {
+    const steps = reduceSteps(this.steps());
 
     steps.unshift({start: true, end: false});
     steps.push({start: false, end: true});
@@ -200,7 +200,7 @@ LabeledPipe.prototype = {
      *
      * @return {Steps[]} A shallow copy of the pipeline's steps.
      */
-  steps: function () {
+  steps() {
     return this._steps.slice();
   },
 };
@@ -277,20 +277,20 @@ LabeledPipe.CHAINABLE_EVENT_EMITTER_METHODS = [
 
 LabeledPipe
   .CHAINABLE_EVENT_EMITTER_METHODS
-  .forEach(function (method) {
+  .forEach(method => {
     LabeledPipe.prototype[method] = function () {
       if (!this._cursor) {
         throw new Error('No event emitter under cursor');
       }
 
-      var stepIndex = this._cursor - 1;
-      var args = slice.call(arguments);
-      var stepsCopy = this.steps();
+      const stepIndex = this._cursor - 1;
+      const args = slice.call(arguments);
+      const stepsCopy = this.steps();
 
       stepsCopy[stepIndex] = copy(stepsCopy[stepIndex]);
       stepsCopy[stepIndex].events = (stepsCopy[stepIndex].events || []).concat({
-        method: method,
-        args: args,
+        method,
+        args,
       });
 
       return new LabeledPipe(this.build.displayName, stepsCopy, this._cursor);
@@ -329,10 +329,10 @@ function findLabel(pipe, label, errorPrefix) {
     }
   }
 
-  var length = 1;
+  let length = 1;
   for (let end = start; end < pipe._steps.length; end += 1, length += 1) {
     if (label === pipe._steps[end].label && pipe._steps[end].end) {
-      return {start: start, end: end, length: length};
+      return {start, end, length};
     }
   }
 
@@ -347,17 +347,17 @@ function findLabel(pipe, label, errorPrefix) {
  * @return {Steps[]}       An array of labeledpipe steps
  */
 function reduceSteps(steps) {
-  var matching = [];
+  const matching = [];
 
-  for (var end = 0; end < steps.length; end += 1) {
-    var step = steps[end];
+  for (let end = 0; end < steps.length; end += 1) {
+    const step = steps[end];
 
     if (step.start || !step.end) {
       matching.unshift(end);
     }
 
     if (step.events) {
-      var start = matching[0];
+      const start = matching[0];
       steps.splice(start, 0, {task: combineEvents, args: [steps.splice(start, end - start + 1)]});
       end = start;
     }
@@ -379,9 +379,9 @@ function reduceSteps(steps) {
  * @return {stream.Duplex}       A single duplex stream
  */
 function combineEvents(steps) {
-  var result = combine(steps);
+  const result = combine(steps);
 
-  steps[steps.length - 1].events.forEach(function (event) {
+  steps[steps.length - 1].events.forEach(event => {
     result[event.method].apply(result, event.args);
   });
 
@@ -398,10 +398,10 @@ function combineEvents(steps) {
  * @return {stream.Duplex}       A single Duplex stream.
  */
 function combine(steps) {
-  var index;
-  var tasks = steps
+  let index;
+  const tasks = steps
     .filter(hasTask)
-    .map(function (step) {
+    .map(step => {
       return step.task.apply(null, step.args);
     });
   if (tasks.length === 0) {
@@ -429,7 +429,7 @@ function combine(steps) {
     tasks[index - 1].pipe(tasks[index]);
   }
 
-  var result = duplexer({bubbleErrors: false, objectMode: true}, tasks[0], tasks[tasks.length - 1]);
+  const result = duplexer({bubbleErrors: false, objectMode: true}, tasks[0], tasks[tasks.length - 1]);
   for (index = 0; index < tasks.length; index++) {
     /**
          * Calling source.pipe(dest), adds an error handler to the destination
@@ -460,21 +460,21 @@ function combine(steps) {
 function spliceNewTask(spliceArgs, label, task, args) {
   // If we're adding a labeledpipe or a lazypipe, add begining and end markers.
   if (task.appendStepsTo instanceof Function) {
-    spliceArgs.push({label: label, start: true, end: false});
+    spliceArgs.push({label, start: true, end: false});
     spliceArgs = task.appendStepsTo(spliceArgs, true);
-    spliceArgs.push({label: label, start: false, end: true});
+    spliceArgs.push({label, start: false, end: true});
   } else if (task) {
     spliceArgs.push({
-      label: label,
-      task: task,
-      args: args,
+      label,
+      task,
+      args,
       start: true,
       end: true,
     });
   } else {
     spliceArgs.push(
-      {label: label, start: true, end: false},
-      {label: label, start: false, end: true}
+      {label, start: true, end: false},
+      {label, start: false, end: true}
     );
   }
 

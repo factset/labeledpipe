@@ -82,6 +82,16 @@
     lodash "^4.17.5"
     to-fast-properties "^2.0.0"
 
+"@hbetts/eslint-config@^1.0.2":
+  version "1.0.2"
+  resolved "http://artifactory.factset.com/artifactory/api/npm/npm/@hbetts/eslint-config/-/eslint-config-1.0.2.tgz?dl=https://registry.npmjs.org/@hbetts/eslint-config/-/eslint-config-1.0.2.tgz#4ed9217457d49f481a3a8b82e8f695f3b23674c0"
+  dependencies:
+    eslint-config-xo-space "^0.18.0"
+
+"@hbetts/nyc-config@^1.0.13":
+  version "1.0.13"
+  resolved "http://artifactory.factset.com/artifactory/api/npm/npm/@hbetts/nyc-config/-/nyc-config-1.0.13.tgz?dl=https://registry.npmjs.org/@hbetts/nyc-config/-/nyc-config-1.0.13.tgz#0233e2a4419c29dc066122cf4ff14edfc1c89712"
+
 "@sindresorhus/is@^0.7.0":
   version "0.7.0"
   resolved "https://registry.npmjs.org/@sindresorhus/is/-/is-0.7.0.tgz#9a06f4f137ee84d7df0460c1fdb1135ffa6c50fd"
@@ -962,15 +972,15 @@ escape-string-regexp@1.0.5, escape-string-regexp@^1.0.2, escape-string-regexp@^1
   version "1.0.5"
   resolved "https://registry.npmjs.org/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
 
-eslint-config-xo-space@^0.19.0:
-  version "0.19.0"
-  resolved "https://registry.npmjs.org/eslint-config-xo-space/-/eslint-config-xo-space-0.19.0.tgz#73af4d047f8f0bfa86028f9c31bf795127becdde"
+eslint-config-xo-space@^0.18.0:
+  version "0.18.0"
+  resolved "http://artifactory.factset.com/artifactory/api/npm/npm/eslint-config-xo-space/-/eslint-config-xo-space-0.18.0.tgz?dl=https://registry.npmjs.org/eslint-config-xo-space/-/eslint-config-xo-space-0.18.0.tgz#92c8130b1ebaad9162bb822fdc8bc8e9f4fa5b8a"
   dependencies:
-    eslint-config-xo "^0.23.0"
+    eslint-config-xo "^0.20.0"
 
-eslint-config-xo@^0.23.0:
-  version "0.23.0"
-  resolved "https://registry.npmjs.org/eslint-config-xo/-/eslint-config-xo-0.23.0.tgz#6f68c49145f90aac345deb7e88026af390116aae"
+eslint-config-xo@^0.20.0:
+  version "0.20.1"
+  resolved "http://artifactory.factset.com/artifactory/api/npm/npm/eslint-config-xo/-/eslint-config-xo-0.20.1.tgz?dl=https://registry.npmjs.org/eslint-config-xo/-/eslint-config-xo-0.20.1.tgz#ad04db35e62bacedcf7b7e8a76388364a78d616d"
 
 eslint-scope@^4.0.0:
   version "4.0.0"
