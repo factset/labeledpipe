@@ -11,9 +11,9 @@ Unlike lazypipe it allows pipeline stages to be labeled.  You can then use those
 labels to control where pipeline stages are added, and even remove previously
 added stages.
 
+## Table of Contents
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**
 
 - [Installation](#installation)
 - [Usage](#usage)
