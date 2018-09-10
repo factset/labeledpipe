@@ -6,7 +6,7 @@
 resources:
   containers:
   - container: my_container
-    image: node:8
+    image: ubuntu:16.04
 
 pool:
   container: my_container
