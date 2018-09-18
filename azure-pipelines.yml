@@ -1,0 +1,19 @@
+# Node.js
+# Build a general Node.js application with npm.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/vsts/pipelines/languages/javascript
+
+resources:
+  containers:
+  - container: my_container
+    image: ubuntu:16.04
+
+pool:
+  container: my_container
+  vmImage: 'Ubuntu 16.04'
+
+steps:
+- script: |
+    yarn install
+    yarn test
+  displayName: 'yarn install and test'
