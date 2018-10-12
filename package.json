@@ -46,7 +46,7 @@
   },
   "devDependencies": {
     "@hbetts/conventional-changelog-config": "^1.0.0",
-    "@hbetts/eslint-config": "^1.0.2",
+    "@hbetts/eslint-config": "^2.0.0",
     "@hbetts/nyc-config": "^1.0.13",
     "chai": "^4.0.0",
     "codecov": "^3.0.0",

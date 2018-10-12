@@ -115,12 +115,12 @@
   dependencies:
     conventional-changelog-angular "^5.0.0"
 
-"@hbetts/eslint-config@^1.0.2":
-  version "1.0.4"
-  resolved "https://registry.npmjs.org/@hbetts/eslint-config/-/eslint-config-1.0.4.tgz#a4252746390d13cfe5f749d980d2f581f9bf4010"
-  integrity sha512-cNB12a5Df2s5uWZbwI6ZLYS1dktYJulgNprpVVepEO/Kiz98A8c7YG1VBspmqqMQeYXTjfrHWziBqi8DIQflmA==
+"@hbetts/eslint-config@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/@hbetts/eslint-config/-/eslint-config-2.0.0.tgz#daf31a7a0e877464703c3572f3c217a0419730f1"
+  integrity sha512-SC9Jv25Iuc3YI1NOeQ8guDJKAn1W422Tru7+573Ezg7rdWBmNlgdC8jXVm4FDBAmjkd9KKjus/QLF5s3WtH7MA==
   dependencies:
-    eslint-config-xo-space "^0.18.0"
+    eslint-config-xo-space "^0.20.0"
 
 "@hbetts/nyc-config@^1.0.13":
   version "1.0.13"
@@ -1009,17 +1009,17 @@ escape-string-regexp@1.0.5, escape-string-regexp@^1.0.5:
   resolved "https://registry.npmjs.org/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
 
-eslint-config-xo-space@^0.18.0:
-  version "0.18.0"
-  resolved "https://registry.npmjs.org/eslint-config-xo-space/-/eslint-config-xo-space-0.18.0.tgz#92c8130b1ebaad9162bb822fdc8bc8e9f4fa5b8a"
-  integrity sha512-WtOEyZ4kvs2RDfK2bCQ24qlbJ8Izc/AfkjqD7DqKqXXih2I4brHxIoQwtgDdnbYWgFG4LuS/f6cn7zBE/JVLSw==
+eslint-config-xo-space@^0.20.0:
+  version "0.20.0"
+  resolved "https://registry.npmjs.org/eslint-config-xo-space/-/eslint-config-xo-space-0.20.0.tgz#75e1fb86d1b052fc1cc3036ca2fa441fa92b85e4"
+  integrity sha512-bOsoZA8M6v1HviDUIGVq1fLVnSu3mMZzn85m2tqKb73tSzu4GKD4Jd2Py4ZKjCgvCbRRByEB5HPC3fTMnnJ1uw==
   dependencies:
-    eslint-config-xo "^0.20.0"
+    eslint-config-xo "^0.24.0"
 
-eslint-config-xo@^0.20.0:
-  version "0.20.1"
-  resolved "http://registry.npmjs.org/eslint-config-xo/-/eslint-config-xo-0.20.1.tgz#ad04db35e62bacedcf7b7e8a76388364a78d616d"
-  integrity sha512-bhDRezvlbYNZn8SHv0WE8aPsdPtH3sq1IU2SznyOtmRwi6e/XQkzs+Kaw1hA9Pz4xmkG796egIsFY2RD6fwUeQ==
+eslint-config-xo@^0.24.0:
+  version "0.24.2"
+  resolved "https://registry.npmjs.org/eslint-config-xo/-/eslint-config-xo-0.24.2.tgz#f61b8ce692e9f9519bdb6edc4ed7ebcd5be48f48"
+  integrity sha512-ivQ7qISScW6gfBp+p31nQntz1rg34UCybd3uvlngcxt5Utsf4PMMi9QoAluLFcPUM5Tvqk4JGraR9qu3msKPKQ==
 
 eslint-scope@^4.0.0:
   version "4.0.0"
