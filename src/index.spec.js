@@ -3,19 +3,15 @@
 /* eslint-disable no-unused-expressions */
 
 const chai = require('chai');
-const mocha = require(`mocha`);
+const {beforeEach, describe, it} = require(`mocha`);
 const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
 const through = require('through2');
 const lazypipe = require('lazypipe');
 const labeledpipe = require('./index');
-const expect = chai.expect;
 
 chai.use(sinonChai);
-
-const beforeEach = mocha.beforeEach;
-const describe = mocha.describe;
-const it = mocha.it;
+const {expect} = chai;
 
 describe('labeledpipe', () => {
   it('should be a function', () => {
@@ -558,7 +554,7 @@ describe('labeledpipe', () => {
         describe('.' + method, () => {
           it('should proxy to pipeline stage under the cursor', () => {
             pipeline = pipeline.pipe(eventSpy, method);
-            pipeline = pipeline[method].apply(pipeline, eventArgs[method]);
+            pipeline = pipeline[method](...eventArgs[method]);
 
             expect(spies[method]).to.be.undefined;
 
@@ -573,7 +569,7 @@ describe('labeledpipe', () => {
 
           it('should handle events when passed to a lazypipe', () => {
             pipeline = pipeline.pipe(eventSpy, method);
-            pipeline = pipeline[method].apply(pipeline, eventArgs[method]);
+            pipeline = pipeline[method](...eventArgs[method]);
             expect(spies[method]).to.be.undefined;
 
             const stream = lazypipe().pipe(pipeline)();

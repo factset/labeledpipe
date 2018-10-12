@@ -3,7 +3,6 @@
 const duplexer = require('duplexer2');
 const through = require('through2');
 const copy = require('shallow-copy');
-const slice = Array.prototype.slice;
 
 module.exports = labeledpipe;
 module.exports.LabeledPipe = LabeledPipe;
@@ -52,14 +51,13 @@ LabeledPipe.prototype = {
      *                               constructed.
      * @return {LabeledPipe}         A new LabeledPipe with the task appended.
      */
-  pipe(/* [label], [task], [args...] */) {
-    const args = slice.call(arguments);
+  pipe(/* [label], [task], [args...] */ ...args) {
     const label = (typeof args[0] === 'string') && args.shift();
     const task = (args[0] instanceof Function) && args.shift();
     const spliceArgs = spliceNewTask([this._cursor, 0], label, task, args);
     const stepsCopy = this.steps();
 
-    stepsCopy.splice.apply(stepsCopy, spliceArgs);
+    stepsCopy.splice(...spliceArgs);
     return new LabeledPipe(this.build.displayName, stepsCopy, this._cursor + spliceArgs.length - 2);
   },
 
@@ -134,8 +132,7 @@ LabeledPipe.prototype = {
      *                                 stream.
      * @return {LabeledPipe}           A new LabeledPipe
      */
-  replace(label/* , task, args... */) {
-    const args = slice.call(arguments, 1);
+  replace(label/* , task, args... */, ...args) {
     const task = (args[0] instanceof Function) && args.shift();
     const location = findLabel(this, label, 'Unable to remove step ');
     const spliceArgs = spliceNewTask([location.start, location.length], label, task, args);
@@ -143,7 +140,7 @@ LabeledPipe.prototype = {
       ((this._cursor <= location.end) ? location.start : (this._cursor - location.length)) + 1;
 
     const stepsCopy = this.steps();
-    stepsCopy.splice.apply(stepsCopy, spliceArgs);
+    stepsCopy.splice(...spliceArgs);
     return new LabeledPipe(this.build.displayName, stepsCopy, newCursor);
   },
 
@@ -278,13 +275,12 @@ LabeledPipe.CHAINABLE_EVENT_EMITTER_METHODS = [
 LabeledPipe
   .CHAINABLE_EVENT_EMITTER_METHODS
   .forEach(method => {
-    LabeledPipe.prototype[method] = function () {
+    LabeledPipe.prototype[method] = function (...args) {
       if (!this._cursor) {
         throw new Error('No event emitter under cursor');
       }
 
       const stepIndex = this._cursor - 1;
-      const args = slice.call(arguments);
       const stepsCopy = this.steps();
 
       stepsCopy[stepIndex] = copy(stepsCopy[stepIndex]);
@@ -382,7 +378,7 @@ function combineEvents(steps) {
   const result = combine(steps);
 
   steps[steps.length - 1].events.forEach(event => {
-    result[event.method].apply(result, event.args);
+    result[event.method](...event.args);
   });
 
   return result;
