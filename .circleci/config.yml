@@ -47,7 +47,7 @@ jobs:
             - node_modules
             - ${HOME}/.cache/yarn
           key: v1-dependencies_deliver
-      - run: $(yarn bin)/semantic-release-github
+      - run: $(yarn bin)/semantic-release-github --preset @hbetts/config
   deploy:
     <<: [*node_8]
     steps:
