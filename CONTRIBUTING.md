@@ -42,4 +42,4 @@ Our project isn't always perfect, but we strive to always improve on that work. 
 
 Along with our desire to hear your feedback and suggestions, we're also interested in accepting direct assistance in the form of new code or documentation.
 
-Please feel free to file merge requests against our [GitHub repository](https://github.com/factset/labeledpipe/pulls).
+Please feel free to file pull requests against our [GitHub repository](https://github.com/factset/labeledpipe/pulls).
