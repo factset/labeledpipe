@@ -42,7 +42,7 @@
   "dependencies": {
     "duplexer2": "0.1.4",
     "shallow-copy": "0.0.1",
-    "through2": "^2.0.1"
+    "through2": "^3.0.0"
   },
   "devDependencies": {
     "@hbetts/conventional-changelog-config": "^1.0.0",
@@ -58,6 +58,6 @@
     "semantic-release-github": "^4.0.0",
     "sinon": "^7.0.0",
     "sinon-chai": "^3.0.0",
-    "through2": "^2.0.1"
+    "through2": "^3.0.0"
   }
 }
