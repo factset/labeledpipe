@@ -45,7 +45,6 @@
     "through2": "^3.0.0"
   },
   "devDependencies": {
-    "@hbetts/conventional-changelog-config": "^1.0.0",
     "@hbetts/eslint-config": "^2.0.0",
     "@hbetts/nyc-config": "^1.0.13",
     "chai": "^4.0.0",
@@ -53,9 +52,7 @@
     "eslint": "^5.3.0",
     "lazypipe": "^1.0.1",
     "mocha": "^5.0.0",
-    "npm-publish-git-tag": "^3.0.0",
     "nyc": "^13.0.0",
-    "semantic-release-github": "^4.0.0",
     "sinon": "^7.0.0",
     "sinon-chai": "^3.0.0",
     "through2": "^3.0.0"

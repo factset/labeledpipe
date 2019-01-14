@@ -1,16 +1,7 @@
-version: 2
+version: 2.1
 
-node_6: &node_6
-  docker:
-    - image: node:6@sha256:337a12f4c9da661e9f373c49470668bbcae19fa1accd52ffef301041746b365e
-
-node_8: &node_8
-  docker:
-    - image: node:8@sha256:5aebe186c00da3308c8fde5b3a246d1927a56947a1b51f5c4308b7318adf74f4
-
-node_next: &node_next
-  docker:
-    - image: node:latest@sha256:5ea9b2d04e1da959087d93289bdcfa5011c3a173bddf3eaf98553676d28b8f63
+orbs:
+  release-workflows: hutson/library-release-workflows@4.3.3
 
 test_plan: &test_plan
   steps:
@@ -29,63 +20,48 @@ test_plan: &test_plan
 
 jobs:
   node_6_test_plan:
-    <<: [*node_6, *test_plan]
+    <<: [*test_plan]
+    docker:
+      - image: node:6@sha256:d4973c8036658a8b43534e5ace8a2ae9e3867832d45582b5d6a0105a03ff8502
   node_8_test_plan:
-    <<: [*node_8, *test_plan]
+    <<: [*test_plan]
+    docker:
+      - image: node:8@sha256:7b65413af120ec5328077775022c78101f103258a1876ec2f83890bce416e896
+  node_10_test_plan:
+    <<: [*test_plan]
+    docker:
+      - image: node:10
   node_next_test_plan:
-    <<: [*node_next, *test_plan]
-  deliver:
-    <<: [*node_8]
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - v1-dependencies_deliver
-      - run: yarn install --frozen-lockfile
-      - save_cache:
-          paths:
-            - node_modules
-            - ${HOME}/.cache/yarn
-          key: v1-dependencies_deliver
-      - run: $(yarn bin)/semantic-release-github --preset @hbetts/config
-  deploy:
-    <<: [*node_8]
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - v1-dependencies_deploy
-      - run: yarn install --frozen-lockfile
-      - save_cache:
-          paths:
-            - node_modules
-            - ${HOME}/.cache/yarn
-          key: v1-dependencies_deploy
-      - run: $(yarn bin)/npm-publish-git-tag
+    <<: [*test_plan]
+    docker:
+      - image: node:latest@sha256:4c42c2b2f908cdd43e833047e38ac553dfed79a51b0583bcd4550c60d35bf383
 
 workflows:
   version: 2
-  build:
+
+  build_and_test:
     jobs:
       - node_6_test_plan
       - node_8_test_plan
+      - node_10_test_plan
       - node_next_test_plan
-      - deliver:
+      - release-workflows/deliver:
+          context: github-interaction
           filters:
             branches:
               only: master
           requires:
             - node_6_test_plan
             - node_8_test_plan
-          context: github-interaction
-      - deploy:
+            - node_10_test_plan
+
+  deploy:
+    jobs:
+      - release-workflows/npm-deploy:
+          context: package-publishing
           filters:
             tags:
-              only: /.+/
-          requires:
-            - deliver
-          context: package-publishing
-
-notify:
-  webhooks:
-    - url: https://webhooks.gitter.im/e/6d8f0cad1cb033a36cf4
+              # Match only semantically valid semver tags - Authored by David Fichtmueller - https://github.com/semver/semver/issues/232#issue-48635632
+              only: /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(\.(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*)?(\+[0-9a-zA-Z-]+(\.[0-9a-zA-Z-]+)*)?$/
+            branches:
+              ignore: /.*/
