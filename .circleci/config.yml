@@ -84,7 +84,7 @@ workflows:
               only: /.+/
           requires:
             - deliver
-          context: npm-interaction
+          context: package-publishing
 
 notify:
   webhooks:
