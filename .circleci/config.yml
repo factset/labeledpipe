@@ -22,11 +22,11 @@ jobs:
   node_6_test_plan:
     <<: [*test_plan]
     docker:
-      - image: node:6@sha256:d4973c8036658a8b43534e5ace8a2ae9e3867832d45582b5d6a0105a03ff8502
+      - image: node:6@sha256:337a12f4c9da661e9f373c49470668bbcae19fa1accd52ffef301041746b365e
   node_8_test_plan:
     <<: [*test_plan]
     docker:
-      - image: node:8@sha256:7b65413af120ec5328077775022c78101f103258a1876ec2f83890bce416e896
+      - image: node:8@sha256:5aebe186c00da3308c8fde5b3a246d1927a56947a1b51f5c4308b7318adf74f4
   node_10_test_plan:
     <<: [*test_plan]
     docker:
@@ -34,7 +34,7 @@ jobs:
   node_next_test_plan:
     <<: [*test_plan]
     docker:
-      - image: node:latest@sha256:4c42c2b2f908cdd43e833047e38ac553dfed79a51b0583bcd4550c60d35bf383
+      - image: node:latest@sha256:5ea9b2d04e1da959087d93289bdcfa5011c3a173bddf3eaf98553676d28b8f63
 
 workflows:
   version: 2
