@@ -30,7 +30,7 @@ jobs:
   node_10_test_plan:
     <<: [*test_plan]
     docker:
-      - image: node:10
+      - image: node:10@sha256:94c90424c2a44ea72daaed746540fb39a44c56310d530b2760281a457b0e6846
   node_next_test_plan:
     <<: [*test_plan]
     docker:
