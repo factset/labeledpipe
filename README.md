@@ -1,3 +1,7 @@
+# Archived
+
+This repository is not being actively maintained, and has been archived.
+
 # labeledpipe
 
 [![CircleCI](https://circleci.com/gh/factset/labeledpipe.svg?style=svg)](https://circleci.com/gh/factset/labeledpipe)
